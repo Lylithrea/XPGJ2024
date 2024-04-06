@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d378c0674dc4743806b73b77d3763f, type: 3}
   m_Name: God 3
   m_EditorClassIdentifier: 
-  godName: God 3
+  godName: Vitalis
   god: 2
   godColor: {r: 0.109024554, g: 0.6603774, b: 0.27120307, a: 1}
   godDescription: Fertility

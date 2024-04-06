@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d378c0674dc4743806b73b77d3763f, type: 3}
   m_Name: God 2
   m_EditorClassIdentifier: 
-  godName: God 2
+  godName: Bastionis
   god: 1
   godColor: {r: 0.11894804, g: 0.35127318, b: 0.764151, a: 1}
   godDescription: Defensive
   godLevel: 0
-  godSprite: {fileID: 0}
+  godSprite: {fileID: -1768082011, guid: df5fec46b8612f2488dd5949387e78a7, type: 3}
   godLevelStats: feffffffffffffff000000000100000002000000
   maxFavour: 100
   currentFavour: 50
