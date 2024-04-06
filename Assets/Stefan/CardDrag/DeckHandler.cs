@@ -20,6 +20,7 @@ public class DeckHandler : MonoBehaviour
     [SerializeField] TweenData _discardTween;
     [SerializeField] TweenData _goToSpot;
     [SerializeField] DragDropHandler _handDrawPrefab;
+    [SerializeField] GameObject back;
 
     public static DeckHandler Instance;
 
@@ -58,7 +59,8 @@ public class DeckHandler : MonoBehaviour
         GameObject card = _drawPile.GetCard();
 
         Debug.Assert(card != null);
-        StartCoroutine(FlipCardToFront(card)) ;
+        card.GetComponentInChildren<CardFlipper>().FlipToFront();
+        //StartCoroutine(FlipCardToFront(card)) ;
 
 
         card.transform.SetParent(openSpot);
@@ -108,8 +110,8 @@ public class DeckHandler : MonoBehaviour
             card.transform.eulerAngles = new Vector3(card.transform.eulerAngles.x, 180 * (1 - t), card.transform.eulerAngles.z);
             if (t > 0.5f)
             {
-                GameObject back = card.transform.Find("Back").gameObject;
-                Debug.Assert(back != null, "You don't have a Back child in card game object");
+                //GameObject back = card.transform.Find("Back").gameObject;
+                //Debug.Assert(back == null, "You don't have a Back child in card game object");
                 back.SetActive(false);
             }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DrawPile : MonoBehaviour
 {
     [SerializeField] GameObject _cardPrefab;
+    [SerializeField] List<SO_Card> _cards= new List<SO_Card>();
     [SerializeField] Hand _hand;
     GameObject _topCard;
     public static DrawPile Instance {  get; private set; }
@@ -19,7 +20,7 @@ public class DrawPile : MonoBehaviour
         else
             Instance = this;
 
-        GetCard();
+        //GetCard();
     }
 
     private void OnDestroy()
@@ -29,9 +30,10 @@ public class DrawPile : MonoBehaviour
 
     public GameObject GetCard()
     {
-        GameObject a = _topCard;
-        _topCard = Instantiate(_cardPrefab, transform);
-        _topCard.transform.position = transform.position;
+        //GameObject a = _topCard;
+        GameObject a = Instantiate(_cardPrefab, transform);
+        a.GetComponentInChildren<CardHandler>().SetupCard(_cards[Random.Range(0, _cards.Count)]);
+        a.transform.position = transform.position;
 
         return a;
     }
