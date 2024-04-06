@@ -12,13 +12,17 @@ public class Player_Manager : MonoBehaviour
     public GameObject DeckSize_2;
     public GameObject DeckSize_3;
 
+    public GameObject Ui_ToScreenShake;
+
     public int DeckSize = 10;
 
+    private Vector3 originalCanvasPosition;
     private Vector3 originalCameraPosition;
 
     private void Start()
     {
         originalCameraPosition = mainCamera.transform.localPosition;
+        originalCanvasPosition = Ui_ToScreenShake.transform.localPosition;
     }
 
     public void Update()
@@ -71,6 +75,8 @@ public class Player_Manager : MonoBehaviour
         {
             Vector3 shake = Random.insideUnitSphere * shakeMagnitude;
             mainCamera.transform.localPosition = originalCameraPosition + shake;
+
+            Ui_ToScreenShake.transform.localPosition = originalCanvasPosition + shake;
 
             elapsedTime += Time.deltaTime;
 

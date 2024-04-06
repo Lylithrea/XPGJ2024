@@ -39,7 +39,7 @@ public class UI_Manager : MonoBehaviour
                 Debug.Log("shaboing");
                 OpenRewardMenu();
             }
-            if (RewardOpen == true) 
+           else
             {
                 Debug.Log("hoingi");
                 CloseRewardMenu();
