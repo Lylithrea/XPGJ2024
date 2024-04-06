@@ -1321,10 +1321,16 @@ MonoBehaviour:
   _mapWidth: 5
   _spacing: 175
   offset: 50
+  playerNode: {fileID: 0}
   _checkedNodes:
   - {fileID: 1874953940}
   - {fileID: 306360768}
   - {fileID: 2072422233}
+  allNodes: []
+  possibleEnemies:
+  - {fileID: 11400000, guid: c4e6ea24e1a635a419cef2c72e93e430, type: 2}
+  - {fileID: 11400000, guid: 089c4735c585df644998761b9e386b42, type: 2}
+  map: {fileID: 135072906}
 --- !u!1 &805223852
 GameObject:
   m_ObjectHideFlags: 0
