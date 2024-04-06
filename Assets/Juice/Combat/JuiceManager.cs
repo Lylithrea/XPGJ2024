@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Manager : MonoBehaviour
+public class JuiceManager : MonoBehaviour
 {
     public float shakeDuration = 0.1f;
     public float shakeMagnitude = 0.1f;

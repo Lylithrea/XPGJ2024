@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Diagnostics.Contracts;
 
 public class CardHandler : MonoBehaviour
 {
@@ -47,6 +48,16 @@ public class CardHandler : MonoBehaviour
     public int GetDamage()
     {
         return adjustedDamage;
+    }
+
+    public CardStats GetCardStats()
+    {
+        CardStats cardStats = new CardStats();
+        cardStats.damage = adjustedDamage;
+        cardStats.healing = adjustedHealing;
+        cardStats.shield = adjustedShield;
+        cardStats.draw = adjustedDraw;
+        return cardStats;
     }
 
     public void UpdateValues()
@@ -96,4 +107,12 @@ public class CardHandler : MonoBehaviour
     }
 
 
+}
+
+public class CardStats
+{
+    public int damage;
+    public int healing;
+    public int shield;
+    public int draw;
 }

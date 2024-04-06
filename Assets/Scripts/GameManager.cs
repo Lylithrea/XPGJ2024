@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
 
     public EnemyHandler EnemyHandler;
+    public PlayerManager PlayerManager;
     public List<SO_Enemy> enemies = new List<SO_Enemy>();
 
     public static GameManager Instance;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     public void FillHand()
     {
+        PlayerManager.StartPlayerTurn();
         DeckHandler.Instance.FillHand();
         DeckHandler.Instance.UpdateHandActivity(true);
     }
@@ -54,8 +56,14 @@ public class GameManager : MonoBehaviour
     public void UseFollower(GameObject follower)
     {
         GodManager.instance.UseFollower();
-        int damage = follower.GetComponent<CardHandler>().GetDamage();
-        EnemyHandler.TakeDamage(damage);
+        CardStats cardStats = follower.GetComponent<CardHandler>().GetCardStats();
+        EnemyHandler.TakeDamage(cardStats.damage);
+        PlayerManager.Heal(cardStats.healing);
+        PlayerManager.AddShield(cardStats.shield);
+        for (int i = 0; i < cardStats.draw; i++)
+        {
+            DeckHandler.Instance.PutCardInHand();
+        }
     }
 
 }

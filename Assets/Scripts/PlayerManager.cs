@@ -1,52 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHandler : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
 
     public int maxHealth;
     public int currentHealth;
+    public int currentShield = 0;
 
-    public TextMeshProUGUI enemyName;
     public Slider healthSlider;
-    public Image enemyImage;
 
-    public int currentShield;
 
-    SO_Enemy currentEnemy;
 
-    public void Setup(SO_Enemy enemy)
+    // Start is called before the first frame update
+    void Start()
     {
-        maxHealth = enemy.maxHealth;
-        currentHealth = enemy.maxHealth;
-
-        currentEnemy = enemy;
-
-        enemyImage.sprite = currentEnemy.enemySprite;
-        enemyName.text = currentEnemy.enemyName;
-
+        currentHealth = maxHealth;
         UpdateUI();
-    }
-
-
-
-
-    public void DoAttack()
-    {
-        currentShield = 0;
-        Attack attack = currentEnemy.GetAttack(currentHealth);
-        currentEnemy.IncreaseAttack(currentHealth);
-        Debug.Log("Enemy attack for " + attack.damage + " damage!");
-        GameManager.Instance.PlayerManager.TakeDamage(attack.damage);
-        Heal(attack.heal);
-    }
-
-    public void AddShield(int amount)
-    {
-        currentShield += amount;
     }
 
     public void TakeDamage(int amount)
@@ -72,10 +44,10 @@ public class EnemyHandler : MonoBehaviour
         // Subtract from health
         currentHealth -= amount;
 
+        // Check if player died
         if (currentHealth <= 0)
         {
-            Debug.Log("Enemy Died");
-            GameManager.Instance.SetupEnemy();
+            Debug.Log("Player died");
         }
         UpdateUI();
     }
@@ -90,11 +62,23 @@ public class EnemyHandler : MonoBehaviour
         UpdateUI();
     }
 
+    public void AddShield(int amount)
+    {
+        currentShield += amount;
+    }
+
+
+    public void StartPlayerTurn()
+    {
+        currentShield = 0;
+
+        UpdateUI();
+    }
+
     public void UpdateUI()
     {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
-
     }
 
 }
