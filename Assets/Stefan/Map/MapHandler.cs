@@ -33,12 +33,15 @@ public class MapHandler : MonoBehaviour
 
     void GenerateNodes()
     {
+
+        PositionInitialNodes();
+
         for (int j = 1; j < _mapLength; j++)
         {
-            var offset = Vector3.zero;
 
             for (int i = 0; i < _checkedNodes.Count; i++)
             {
+
                 float totalChance = _stayNodeChance + _convergeNodeChance + _divergeNodeChance;
                 float rand = Random.Range(0f, totalChance);
                 float cumulativeChance = _stayNodeChance;
@@ -46,7 +49,7 @@ public class MapHandler : MonoBehaviour
                 var node = _checkedNodes[i];
                 if (rand < cumulativeChance)
                 {
-                    CreateNode(node, offset);
+                    CreateNode(node, j);
                     node.Type = NodeType.Stay;
 
                 }
@@ -62,7 +65,7 @@ public class MapHandler : MonoBehaviour
                     }
                     else
                     {
-                        CreateNode(node, offset);
+                        CreateNode(node, j);
                         node.Type = NodeType.Stay;
                     }
 
@@ -72,22 +75,27 @@ public class MapHandler : MonoBehaviour
                     //if curr number of nodes is bigger than max width - 1, don't do a _diverge, but a stay
                     if (_checkedNodes.Count <= _mapWidth - 1)
                     {
-                        offset += _spacing * Vector3.right;
-                        CreateNode(node, offset);
-                        offset += _spacing * Vector3.right;
+                        CreateNode(node, j);
+                        node.Type = NodeType.Diverge;
+                        node.img.color = Color.red;
+
                     }
 
-                    CreateNode(node, offset);
-                    node.img.color = Color.red;
-                    node.Type = NodeType.Diverge;
+                    CreateNode(node,j);
+                    node.Type = NodeType.Stay;
                 }
 
             }
-            //no new nodes because of converging nodes
 
-            foreach (var item in _convergingNodes)
+            for (int i = 0; i < _checkedNodes.Count; i++)
             {
-                _newNodes.GetRandomItem().PreviousNodes.Add(item);
+                var node = _checkedNodes[i];
+                if (node.Type == NodeType.Converge)
+                {
+                    var closestNum = Utils.ClosestNumberInRange(0, _newNodes.Count - 1, i);
+                    _newNodes[closestNum].PreviousNodes.Add(node);
+                }
+
             }
 
             var copy = _checkedNodes;
@@ -100,11 +108,19 @@ public class MapHandler : MonoBehaviour
         CreateBoss();
     }
 
+    void PositionInitialNodes()
+    {
+        for (int i = 0; i < _checkedNodes.Count; i++)
+        {
+            var node = _checkedNodes[i];
+            node.transform.position = _spacing * i * Vector3.right;
+
+        }
+    }
     void CreateBoss()
     {
-        //boss
         var bossNode = Instantiate(_nodePrefab, transform);
-        bossNode.transform.position = _checkedNodes[0].transform.position;
+        bossNode.transform.position = Vector3.Lerp(_checkedNodes[0].transform.position, _checkedNodes[_checkedNodes.Count - 1].transform.position, 0.5f);
         bossNode.transform.position += _spacing * Vector3.up;
 
         foreach (var n in _checkedNodes)
@@ -114,13 +130,12 @@ public class MapHandler : MonoBehaviour
         _checkedNodes.Add(bossNode);
     }
 
-    void CreateNode(Node node, Vector3 offset)
+    void CreateNode(Node node, int yIndex)
     {
         var newNode = Instantiate(_nodePrefab, transform);
         newNode.PreviousNodes.Add(node);
         _newNodes.Add(newNode);
-        newNode.transform.position = node.transform.position;
-        newNode.transform.position += _spacing * Vector3.up + offset;
+        newNode.transform.position = _spacing * yIndex * Vector3.up + _spacing * (_newNodes.Count - 1) * Vector3.right;
     }
 
     void ConnectNode(Node node)
