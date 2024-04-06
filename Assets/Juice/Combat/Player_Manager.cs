@@ -15,12 +15,22 @@ public class Player_Manager : MonoBehaviour
     public GameObject DeckSize_2;
     public GameObject DeckSize_3;
 
+    public GameObject DiscardSize_1;
+    public GameObject DiscardSize_2;
+    public GameObject DiscardSize_3;
+
     public GameObject Ui_ToScreenShake;
+
+    public List<GameObject> Followers;
 
     public int DeckSize = 10;
 
+    public int DiscardSize = 10;
+
     private Vector3 originalCanvasPosition;
     private Vector3 originalCanvasScale;
+
+    public int FollowerSize = 10;
 
     private void Start()
     {
@@ -45,28 +55,74 @@ public class Player_Manager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             DeckSize = DeckSize + 5;
+            UpdateDeckSize();
         }
 
-       if(DeckSize >= 10)
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            DiscardSize = DiscardSize + 5;
+            UpdateDiscardSize();
+        }
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            UpdateFollowers(FollowerSize);
+        }
+        
+    }
+
+    public void UpdateFollowers(int FollowerAmount)
+    {
+        
+    }
+
+    public void UpdateDeckSize()
+    {
+        if (DeckSize >= 10)
         {
             Debug.Log("10 or less");
             DeckSize_1.SetActive(true);
             DeckSize_2.SetActive(false);
             DeckSize_3.SetActive(false);
         }
-       if(DeckSize >= 20)
+        if (DeckSize >= 20)
         {
             Debug.Log("20 or more");
             DeckSize_1.SetActive(false);
             DeckSize_2.SetActive(true);
             DeckSize_3.SetActive(false);
         }
-       if(DeckSize >= 30) 
+        if (DeckSize >= 30)
         {
             Debug.Log("30 or more");
             DeckSize_1.SetActive(false);
             DeckSize_2.SetActive(false);
             DeckSize_3.SetActive(true);
+        }
+    }
+
+    public void UpdateDiscardSize()
+    {
+        if (DiscardSize >= 10)
+        {
+            Debug.Log("10 or less");
+            DiscardSize_1.SetActive(true);
+            DiscardSize_2.SetActive(false);
+            DiscardSize_3.SetActive(false);
+        }
+        if (DiscardSize >= 20)
+        {
+            Debug.Log("20 or more");
+            DiscardSize_1.SetActive(false);
+            DiscardSize_2.SetActive(true);
+            DiscardSize_3.SetActive(false);
+        }
+        if (DiscardSize >= 30)
+        {
+            Debug.Log("30 or more");
+            DiscardSize_1.SetActive(false);
+            DiscardSize_2.SetActive(false);
+            DiscardSize_3.SetActive(true);
         }
     }
 
