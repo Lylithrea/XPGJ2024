@@ -75,6 +75,11 @@ public class DragDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
         float currDistance = Vector2.Distance(_origPos, transform.position);
         float t = currDistance / _distanceUntilVertical;
         t = Mathf.Clamp01(t);
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Lerp(_origRotationZ, 0, t));
+
+        // Calculate the target rotation
+        Quaternion targetRotation = Quaternion.Euler(0, 0, Mathf.Lerp(_origRotationZ, 0, t));
+
+        // Apply the rotation
+        transform.rotation = targetRotation;
     }
 }

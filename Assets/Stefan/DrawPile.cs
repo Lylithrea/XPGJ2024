@@ -5,7 +5,6 @@ using UnityEngine;
 public class DrawPile : MonoBehaviour
 {
     [SerializeField] GameObject _cardPrefab;
-    [SerializeField] Hand _hand;
     GameObject _topCard;
     public static DrawPile Instance {  get; private set; }
 

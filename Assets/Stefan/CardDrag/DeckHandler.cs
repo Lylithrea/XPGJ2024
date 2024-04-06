@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 [Serializable]
@@ -50,7 +51,7 @@ public class DeckHandler : MonoBehaviour
 
     }
 
-    bool PutCardInHand()
+    public bool PutCardInHand()
     {
         
         Transform openSpot = _hand.GetOpenSpot();
@@ -83,9 +84,10 @@ public class DeckHandler : MonoBehaviour
         Debug.Assert(draw != null, "You can interact with discard zone only with cards that are in the hand");
 
         Destroy(draw);
-
         card.transform.DOMove(_discardSpot.transform.position, _discardTween.Duration).SetEase(_discardTween.Easing).OnComplete(()=> Destroy(card));
-        card.GetComponent<Image>().DOFade(0, _discardTween.Duration).SetEase(_discardTween.Easing);
+        var rot = card.transform.eulerAngles;
+        card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
+        card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
 
         _discardSpot.DiscardedCards.Add(card);
     }
