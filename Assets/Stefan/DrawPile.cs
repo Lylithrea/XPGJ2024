@@ -7,6 +7,7 @@ public class DrawPile : MonoBehaviour
     [SerializeField] GameObject _cardPrefab;
     [SerializeField] List<SO_Card> _cards= new List<SO_Card>();
     [SerializeField] Hand _hand;
+
     GameObject _topCard;
     public static DrawPile Instance {  get; private set; }
 
