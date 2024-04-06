@@ -53,6 +53,18 @@ public class GameManager : MonoBehaviour
         EnemyHandler.Setup(enemies[Random.Range(0, enemies.Count)]);
     }
 
+    public void SetEnemy(SO_Enemy enemy)
+    {
+        EnemyHandler.Setup(enemy);
+        
+    }
+
+    public void StartGame()
+    {
+        //handle drawing cards
+        //Animations etc?
+    }
+
     public void UseFollower(GameObject follower)
     {
         GodManager.instance.UseFollower();
