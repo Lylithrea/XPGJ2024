@@ -8,6 +8,9 @@ public class Player_Manager : MonoBehaviour
     public float shakeMagnitude = 0.1f;
     public Camera mainCamera;
 
+    public float zoomDuration = 0.1f;
+    public float zoomMagnitude = 0.1f;
+
     public GameObject DeckSize_1;
     public GameObject DeckSize_2;
     public GameObject DeckSize_3;
@@ -17,12 +20,12 @@ public class Player_Manager : MonoBehaviour
     public int DeckSize = 10;
 
     private Vector3 originalCanvasPosition;
-    private Vector3 originalCameraPosition;
+    private Vector3 originalCanvasScale;
 
     private void Start()
     {
-        originalCameraPosition = mainCamera.transform.localPosition;
         originalCanvasPosition = Ui_ToScreenShake.transform.localPosition;
+        originalCanvasScale = Ui_ToScreenShake.transform.localScale;
     }
 
     public void Update()
@@ -31,6 +34,12 @@ public class Player_Manager : MonoBehaviour
         {
             Debug.Log("whaaaaaa");
             ScreenShake();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("whaaaaaa");
+            ScreenZoom();
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -67,6 +76,11 @@ public class Player_Manager : MonoBehaviour
         StartCoroutine(Shake());
     }
 
+    public void ScreenZoom()
+    {
+        StartCoroutine(Zoom());
+    }
+
     // Coroutine for screen shake effect
     IEnumerator Shake()
     {
@@ -83,6 +97,24 @@ public class Player_Manager : MonoBehaviour
             yield return null;
         }
         Ui_ToScreenShake.transform.localPosition = originalCanvasPosition;
+    }
+
+
+    IEnumerator Zoom()
+    {
+        float elapsedTime = 0.0f;
+        while (elapsedTime < zoomDuration)
+        {
+            Vector3 zoom = Random.insideUnitSphere * zoomMagnitude;
+            //mainCamera.transform.localPosition = originalCameraPosition + shake;
+
+            Ui_ToScreenShake.transform.localScale = originalCanvasScale + zoom;
+
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+        Ui_ToScreenShake.transform.localScale = originalCanvasScale;
     }
 
     // Method to handle player taking damage
