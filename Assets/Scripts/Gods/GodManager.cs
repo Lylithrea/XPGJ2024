@@ -52,9 +52,46 @@ public class GodManager : MonoBehaviour
     }
 
 
-    public void SacrificeHandler(Gods god)
+    public void UseFollower()
     {
+        foreach (KeyValuePair<Gods, GodFavour> god in godFavours)
+        {
+            AdjustFavour(god.Key, -1);
+        }
 
+
+    }
+
+
+    public void SacrificeHandler(Gods god, GameObject follower)
+    {
+        if (follower.GetComponent<CardHandler>().followerCard.followingGod == god)
+        {
+            AdjustFavour(god, 15);
+        }
+        else
+        {
+            AdjustFavour(god, 5);
+        }
+
+        switch (god)
+        {
+            case Gods.Offensive:
+                AdjustFavour(Gods.Defensive, -10);
+                break;
+            case Gods.Defensive:
+                AdjustFavour(Gods.Offensive, -10);
+                break;
+            case Gods.Fertility:
+                AdjustFavour(Gods.Socializing, -10);
+                break;
+            case Gods.Socializing:
+                AdjustFavour(Gods.Fertility, -10);
+                break;
+            default:
+                Debug.LogWarning("God does not exist.");
+                break;
+        }
     }
 
 

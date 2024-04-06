@@ -36,8 +36,11 @@ public class GodHandler : MonoBehaviour, ICardInteractable
     public void Interact(GameObject card)
     {
         card.transform.position = transform.position;
-        SacrificeFollower();
+        StartCoroutine(card.GetComponent<DragDropHandler>().DestroyCardAfterSeconds(1));
+        SacrificeFollower(card);
     }
+
+    
 
 
     public int GetFavourLevel()
@@ -59,9 +62,10 @@ public class GodHandler : MonoBehaviour, ICardInteractable
     }
 
 
-    public void SacrificeFollower()
+    public void SacrificeFollower(GameObject card)
     {
         Debug.Log("Sacrificed the follower...");
+        GodManager.instance.SacrificeHandler(god.god, card);
     }
 
 }

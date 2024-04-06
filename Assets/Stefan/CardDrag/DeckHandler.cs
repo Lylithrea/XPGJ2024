@@ -52,6 +52,11 @@ public class DeckHandler : MonoBehaviour
 
     }
 
+    public void UpdateHandActivity(bool isActive)
+    {
+        _hand.UpdateHandActivity(isActive);
+    }
+
     public bool PutCardInHand()
     {
         
@@ -67,10 +72,11 @@ public class DeckHandler : MonoBehaviour
         card.transform.SetParent(openSpot);
         card.transform.DOMove(openSpot.position, _goToSpot.Duration).SetEase(_goToSpot.Easing);
         card.transform.DORotate(openSpot.eulerAngles, _goToSpot.Duration).SetEase(_goToSpot.Easing);
+        _hand.AddCard(card);
 
         DragDropHandler handDraw = card.AddComponent<DragDropHandler>();
 
-        handDraw.SetRestPosition(openSpot.position);
+        handDraw.SetRestPosition(openSpot);
         handDraw.Copy(_handDrawPrefab);
         return true;
     }
@@ -90,7 +96,7 @@ public class DeckHandler : MonoBehaviour
         var rot = card.transform.eulerAngles;
         card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
         card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
-
+        _hand.RemoveCard(card);
         _discardSpot.DiscardedCards.Add(card);
     }
 
@@ -101,6 +107,13 @@ public class DeckHandler : MonoBehaviour
             yield return new WaitForSeconds(_waitUntilNext);
         }
     }
+
+
+    public void SacrificeCard(GameObject card)
+    {
+        _hand.RemoveCard(card);
+    }
+
 
     IEnumerator FlipCardToFront(GameObject card)
     {

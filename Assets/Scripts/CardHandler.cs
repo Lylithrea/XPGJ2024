@@ -10,6 +10,8 @@ public class CardHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI followerName;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private Image followerImage;
+    [SerializeField] private GameObject inactiveSprite;
+
 
     public int adjustedDamage;
     public int adjustedHealing;
@@ -36,8 +38,15 @@ public class CardHandler : MonoBehaviour
         adjustedShield = followerCard.shield;
         adjustedDraw = followerCard.draw;
 
+        UpdateValues();
 
         UpdateUI();
+    }
+
+
+    public int GetDamage()
+    {
+        return adjustedDamage;
     }
 
     public void UpdateValues()
@@ -81,6 +90,10 @@ public class CardHandler : MonoBehaviour
         GetComponent<Image>().color = GodManager.instance.GetGodStats(followerCard.followingGod).godColor;
     }
 
+    public void UpdateActivity(bool isActive)
+    {
+        inactiveSprite.SetActive(!isActive);
+    }
 
 
 }

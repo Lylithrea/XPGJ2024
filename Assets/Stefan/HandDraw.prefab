@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scale:
-    Easing: 23
     Duration: 0.1
+    Easing: 23
   _goBack:
-    Easing: 1
     Duration: 0.2
+    Easing: 1
   _scaleAdd: 0.1
-  _distanceUntilVertical: 50
+  _distanceUntilVertical: 200
