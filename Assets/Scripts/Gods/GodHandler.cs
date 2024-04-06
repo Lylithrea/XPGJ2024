@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GodHandler : MonoBehaviour
+public class GodHandler : MonoBehaviour, ICardInteractable
 {
     public SO_God god;
 
@@ -25,6 +25,18 @@ public class GodHandler : MonoBehaviour
 
         godFavour.maxValue = god.maxFavour;
         godFavour.value = god.currentFavour;
+    }
+
+
+    public bool CanInteract(GameObject card)
+    {
+        return true;
+    }
+
+    public void Interact(GameObject card)
+    {
+        card.transform.position = transform.position;
+        SacrificeFollower();
     }
 
 
