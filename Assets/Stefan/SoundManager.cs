@@ -23,6 +23,7 @@ public enum SoundName
     CardDraw,
     ButtonClick
 }
+
 public class SoundManager : MonoBehaviour
 {
     List<AudioSource> activeSources = new();

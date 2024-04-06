@@ -53,17 +53,4 @@ public class GameManager : MonoBehaviour
         EnemyHandler.Setup(enemies[Random.Range(0, enemies.Count)]);
     }
 
-    public void UseFollower(GameObject follower)
-    {
-        GodManager.instance.UseFollower();
-        CardStats cardStats = follower.GetComponent<CardHandler>().GetCardStats();
-        EnemyHandler.TakeDamage(cardStats.damage);
-        PlayerManager.Heal(cardStats.healing);
-        PlayerManager.AddShield(cardStats.shield);
-        for (int i = 0; i < cardStats.draw; i++)
-        {
-            DeckHandler.Instance.PutCardInHand();
-        }
-    }
-
 }

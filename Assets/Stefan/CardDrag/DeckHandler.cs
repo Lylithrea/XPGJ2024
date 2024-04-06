@@ -97,7 +97,7 @@ public class DeckHandler : MonoBehaviour
         card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
         card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
         _hand.RemoveCard(card);
-        _discardSpot.DiscardedCards.Add(card);
+        _discardSpot.DiscardedCards.Add(card.GetComponent<CardHandler>().followerCard);
     }
 
     IEnumerator FillHand_Cr()
