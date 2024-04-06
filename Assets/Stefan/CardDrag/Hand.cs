@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Hand : MonoBehaviour
 {
     [SerializeField] Transform[] _cardSpots;
     [SerializeField] Transform _circleCenter;
+    public List<GameObject> cards = new List<GameObject>();
 
     public ReadOnlyCollection<Transform> CardSpots { get; private set; }
 
@@ -27,5 +29,25 @@ public class Hand : MonoBehaviour
 
     }
 
+    public void UpdateHandActivity(bool isActive)
+    {
+        foreach (GameObject card in cards)
+        {
+            card.GetComponent<CardHandler>().UpdateActivity(isActive);
+        }
+    }
+
    
+    public void AddCard(GameObject card)
+    {
+        cards.Add(card);
+    }
+
+    public void RemoveCard(GameObject card)
+    {
+        cards.Remove(card);
+    }
+
+
+
 }

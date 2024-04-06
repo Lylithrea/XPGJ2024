@@ -21,6 +21,7 @@ public class DeckHandler : MonoBehaviour
     [SerializeField] TweenData _discardTween;
     [SerializeField] TweenData _goToSpot;
     [SerializeField] DragDropHandler _handDrawPrefab;
+    [SerializeField] GameObject back;
 
     public static DeckHandler Instance;
 
@@ -51,6 +52,11 @@ public class DeckHandler : MonoBehaviour
 
     }
 
+    public void UpdateHandActivity(bool isActive)
+    {
+        _hand.UpdateHandActivity(isActive);
+    }
+
     public bool PutCardInHand()
     {
         
@@ -59,16 +65,18 @@ public class DeckHandler : MonoBehaviour
         GameObject card = _drawPile.GetCard();
 
         Debug.Assert(card != null);
-        StartCoroutine(FlipCardToFront(card)) ;
+        card.GetComponentInChildren<CardFlipper>().FlipToFront();
+        //StartCoroutine(FlipCardToFront(card)) ;
 
 
         card.transform.SetParent(openSpot);
         card.transform.DOMove(openSpot.position, _goToSpot.Duration).SetEase(_goToSpot.Easing);
         card.transform.DORotate(openSpot.eulerAngles, _goToSpot.Duration).SetEase(_goToSpot.Easing);
+        _hand.AddCard(card);
 
         DragDropHandler handDraw = card.AddComponent<DragDropHandler>();
 
-        handDraw.SetRestPosition(openSpot.position);
+        handDraw.SetRestPosition(openSpot);
         handDraw.Copy(_handDrawPrefab);
         return true;
     }
@@ -88,7 +96,7 @@ public class DeckHandler : MonoBehaviour
         var rot = card.transform.eulerAngles;
         card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
         card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
-
+        _hand.RemoveCard(card);
         _discardSpot.DiscardedCards.Add(card);
     }
 
@@ -100,6 +108,13 @@ public class DeckHandler : MonoBehaviour
         }
     }
 
+
+    public void SacrificeCard(GameObject card)
+    {
+        _hand.RemoveCard(card);
+    }
+
+
     IEnumerator FlipCardToFront(GameObject card)
     {
         float duration = 0;
@@ -110,8 +125,8 @@ public class DeckHandler : MonoBehaviour
             card.transform.eulerAngles = new Vector3(card.transform.eulerAngles.x, 180 * (1 - t), card.transform.eulerAngles.z);
             if (t > 0.5f)
             {
-                GameObject back = card.transform.Find("Back").gameObject;
-                Debug.Assert(back != null, "You don't have a Back child in card game object");
+                //GameObject back = card.transform.Find("Back").gameObject;
+                //Debug.Assert(back == null, "You don't have a Back child in card game object");
                 back.SetActive(false);
             }
 
