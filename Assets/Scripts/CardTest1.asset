@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CardTest1
   m_EditorClassIdentifier: 
   followerName: Blep
-  followingGod: 0
+  followingGod: 1
   damage: 4
   healing: 0
   shield: 1

@@ -18,14 +18,14 @@ public class CardHandler : MonoBehaviour
 
 
 
-    public Cards followerCard;
+    public SO_Card followerCard;
 
     public void Start()
     {
         SetupCard(followerCard);
     }
 
-    public void SetupCard(Cards card)
+    public void SetupCard(SO_Card card)
     {
         followerCard = card;
 
@@ -78,6 +78,7 @@ public class CardHandler : MonoBehaviour
 
         description.text = descriptionText;
         followerImage.sprite = followerCard.followerSprite;
+        GetComponent<Image>().color = GodManager.instance.GetGodStats(followerCard.followingGod).godColor;
     }
 
 

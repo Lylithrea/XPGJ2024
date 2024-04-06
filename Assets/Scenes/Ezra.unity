@@ -461,6 +461,10 @@ MonoBehaviour:
   followerName: {fileID: 890415550}
   description: {fileID: 685325640}
   followerImage: {fileID: 48991764}
+  adjustedDamage: 0
+  adjustedHealing: 0
+  adjustedShield: 0
+  adjustedDraw: 0
   followerCard: {fileID: 11400000, guid: b0ab1d483b6420a49860133a60bb70c1, type: 2}
 --- !u!114 &801175550
 MonoBehaviour:
@@ -916,7 +920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1896179472
 RectTransform:
   m_ObjectHideFlags: 0

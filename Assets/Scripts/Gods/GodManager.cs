@@ -35,9 +35,10 @@ public class GodManager : MonoBehaviour
             if(i >= godPositions.Count) { Debug.LogWarning("There are more gods than positions for them."); return; }
             GameObject newGod = Instantiate(godPrefab, godPositions[i]);
             //newGod.transform.position = godPositions[i].transform.position;
-            newGod.GetComponentInChildren<GodHandler>().SetupGod(gods[i]);
+            
             godHandlers.Add(gods[i].god, newGod.GetComponentInChildren<GodHandler>());   
             godFavours.Add(gods[i].god, new GodFavour(gods[i], gods[i].currentFavour));
+            newGod.GetComponentInChildren<GodHandler>().SetupGod(gods[i]);
         }
     }
 
@@ -75,6 +76,12 @@ public class GodManager : MonoBehaviour
         godFavours[god].currentFavour += amount;
         godHandlers[god].UpdateFavour();
         BadUpdateOfCards();
+    }
+
+    public SO_God GetGodStats(Gods god)
+    {
+        if (!godFavours.ContainsKey(god)) { Debug.LogWarning("Something went wrong, there is no stats for this god."); return null; }
+        return godFavours[god].god;
     }
 
     public void BadUpdateOfCards()
