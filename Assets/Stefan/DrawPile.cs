@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class DrawPile : MonoBehaviour
 {
-    [SerializeField] Draw[] _cardToDrawPrefabs;
+    [SerializeField] GameObject _cardPrefab;
     [SerializeField] Hand _hand;
-    Draw _topCard;
-    public static Deck Instance {  get; private set; }
+    GameObject _topCard;
+    public static DrawPile Instance {  get; private set; }
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -20,16 +21,16 @@ public class Deck : MonoBehaviour
 
         GetCard();
     }
+
     private void OnDestroy()
     {
         Instance = null;
     }
 
-    public Draw GetCard()
+    public GameObject GetCard()
     {
-        var randomCard = _cardToDrawPrefabs[Random.Range(0, _cardToDrawPrefabs.Length)];
-        var a = _topCard;
-        _topCard = Instantiate(randomCard, transform);
+        GameObject a = _topCard;
+        _topCard = Instantiate(_cardPrefab, transform);
         _topCard.transform.position = transform.position;
 
         return a;
