@@ -74,7 +74,7 @@ public class Player_Manager : MonoBehaviour
         while (elapsedTime < shakeDuration)
         {
             Vector3 shake = Random.insideUnitSphere * shakeMagnitude;
-            mainCamera.transform.localPosition = originalCameraPosition + shake;
+            //mainCamera.transform.localPosition = originalCameraPosition + shake;
 
             Ui_ToScreenShake.transform.localPosition = originalCanvasPosition + shake;
 
@@ -82,7 +82,7 @@ public class Player_Manager : MonoBehaviour
 
             yield return null;
         }
-        mainCamera.transform.localPosition = originalCameraPosition;
+        Ui_ToScreenShake.transform.localPosition = originalCanvasPosition;
     }
 
     // Method to handle player taking damage
