@@ -1,18 +1,25 @@
 using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 [Serializable]
 public struct SoundData
 {
     public float Volume;
+
+    public SoundData(float volume)
+    {
+        Volume = volume;
+    }
 }
 public enum SoundName
 {
     Button,
     Map,
     Menu,
-    Battle,
+    BattleStart,
+    BattleLoop,
     Rest,
     Reward,
     FollowerUse,
@@ -24,10 +31,22 @@ public enum SoundName
     ButtonClick
 }
 
+class SourceInfo
+{
+    public AudioSource AudioSource;
+    public string Name;
+
+    public SourceInfo(AudioSource audioSource, string name)
+    {
+        AudioSource = audioSource;
+        Name = name;
+    }
+}
+
 public class SoundManager : MonoBehaviour
 {
-    List<AudioSource> activeSources = new();
-    Stack<AudioSource> inactiveSources;
+    readonly List<SourceInfo> _activeSources = new();
+    Stack<AudioSource> _inactiveSources;
     public static SoundManager Instance { get; private set; }
     void Awake()
     {
@@ -39,18 +58,17 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            inactiveSources = new Stack<AudioSource>(GetComponents<AudioSource>());
-            foreach (AudioSource source in inactiveSources)
+            _inactiveSources = new Stack<AudioSource>(GetComponents<AudioSource>());
+            foreach (AudioSource source in _inactiveSources)
                 InitSource(source);
             Instance = this;
 
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
     }
 
-
-    [SerializedDictionary("Clip Name", "Clip")]
-    public SerializedDictionary<SoundName, AudioClip> SoundClips;
+    [SerializeField, Range(0, 1)] float _masterVolume; 
+    [SerializedDictionary("Clip Name", "Clip")] public SerializedDictionary<SoundName, AudioClip> SoundClips;
 
     public void PlaySound(SoundName soundName)
     {
@@ -77,6 +95,29 @@ public class SoundManager : MonoBehaviour
         source.Play();
     }
 
+    public void PlayBattleMusic(float volume = .5f)
+    {
+        var source = GetSource("BattleStart");
+        source.clip = SoundClips[SoundName.BattleStart];
+        source.volume = volume;
+        source.Play();
+        var source2 = GetSource("BattleLoop");
+        source2.clip = SoundClips[SoundName.BattleLoop];
+        source2.loop = true;
+        source2.volume = volume;
+        source2.PlayDelayed(source.clip.length);
+    }
+
+    public void StopBattleMusic()
+    {
+        var start = FindSourceByName("BattleStart");
+        var loop = FindSourceByName("BattleLoop");
+        if(start != null)
+            start.Stop();
+        if(loop != null)
+            loop.Stop();
+    }
+
     void InitSource(AudioSource source)
     {
         source.playOnAwake = false;
@@ -85,31 +126,60 @@ public class SoundManager : MonoBehaviour
     AudioSource GetSource()
     {
         AudioSource source;
-        if (inactiveSources.Count == 0)
+        if (_inactiveSources.Count == 0)
         {
             source = gameObject.AddComponent<AudioSource>();
             InitSource(source);
         }
         else
-            source = inactiveSources.Pop();
+            source = _inactiveSources.Pop();
 
-        activeSources.Add(source);
+        _activeSources.Add(new SourceInfo(source,null));
+        source.enabled = true;
+        source.loop = false;
         return source;
 
     }
 
-    void ReleaseSource(AudioSource audioSource)
+    AudioSource GetSource(string nameSource)
     {
-        activeSources.Remove(audioSource);
-        inactiveSources.Push(audioSource);
+        AudioSource source;
+        if (_inactiveSources.Count == 0)
+        {
+            source = gameObject.AddComponent<AudioSource>();
+            InitSource(source);
+        }
+        else
+            source = _inactiveSources.Pop();
+
+        _activeSources.Add(new SourceInfo(source, nameSource));
+        source.loop = false;
+        source.enabled = true;
+        return source;
+
+    }
+
+    AudioSource FindSourceByName(string name)
+    {
+        var info = _activeSources.FirstOrDefault(s => s.Name == name);
+        if(info != null)
+            return info.AudioSource;
+        return null;
+    }
+
+    void ReleaseSource(SourceInfo audioSource)
+    {
+        _activeSources.Remove(audioSource);
+        audioSource.AudioSource.enabled = false;
+        _inactiveSources.Push(audioSource.AudioSource);
     }
 
     void FixedUpdate()
     {
-        for (int i = 0; i < activeSources.Count; i++)
+        for (int i = 0; i < _activeSources.Count; i++)
         {
-            var source = activeSources[i];
-            if (!source.isPlaying)
+            var source = _activeSources[i];
+            if (!source.AudioSource.isPlaying)
             {
                 ReleaseSource(source);
                 i--;

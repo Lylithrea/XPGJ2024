@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,13 +18,15 @@ public class DeckHandler : MonoBehaviour
     [SerializeField] Hand _hand;
     [SerializeField] float _waitUntilNext;
     [SerializeField] bool test;
-    [SerializeField] DiscardPile _discardSpot;
+    [SerializeField] DiscardPile _discardPile;
     [SerializeField] TweenData _discardTween;
     [SerializeField] TweenData _goToSpot;
     [SerializeField] DragDropHandler _handDrawPrefab;
     [SerializeField] GameObject back;
 
     public static DeckHandler Instance;
+
+    public List<SO_Card> Deck = new ();
 
     void Awake()
     {
@@ -36,7 +39,13 @@ public class DeckHandler : MonoBehaviour
             Instance = this;
 
     }
-
+    private void Start()
+    {
+        foreach (SO_Card card in Deck)
+        {
+            _drawPile.PutCardInPile(card);
+        }
+    }
     void OnDestroy()
     {
         Instance = null;
@@ -62,11 +71,24 @@ public class DeckHandler : MonoBehaviour
         
         Transform openSpot = _hand.GetOpenSpot();
         if (openSpot == null) return false;
+
         GameObject card = _drawPile.GetCard();
 
-        Debug.Assert(card != null);
+        if(card == null)
+        {
+            foreach (var discardCard in _discardPile.DiscardedCards)
+                _drawPile.PutCardInPile (discardCard);
+            card = _drawPile.GetCard ();
+
+            if (card == null)
+            {
+                //YOU LOST! THERE ARE NO MORE CARDS TO USE!
+                
+                return false;
+            }
+        }
+        
         card.GetComponentInChildren<CardFlipper>().FlipToFront();
-        //StartCoroutine(FlipCardToFront(card)) ;
 
 
         card.transform.SetParent(openSpot);
@@ -92,12 +114,14 @@ public class DeckHandler : MonoBehaviour
         Debug.Assert(draw != null, "You can interact with discard zone only with cards that are in the hand");
 
         Destroy(draw);
-        card.transform.DOMove(_discardSpot.transform.position, _discardTween.Duration).SetEase(_discardTween.Easing).OnComplete(()=> Destroy(card));
+        card.transform.DOMove(_discardPile.transform.position, _discardTween.Duration).SetEase(_discardTween.Easing).OnComplete(()=> Destroy(card));
         var rot = card.transform.eulerAngles;
         card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
         card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
         _hand.RemoveCard(card);
-        _discardSpot.DiscardedCards.Add(card.GetComponent<CardHandler>().followerCard);
+        //add in discard
+        _discardPile.DiscardedCards.Add(card.GetComponent<CardHandler>().followerCard);
+
     }
 
     IEnumerator FillHand_Cr()
@@ -115,25 +139,4 @@ public class DeckHandler : MonoBehaviour
     }
 
 
-    IEnumerator FlipCardToFront(GameObject card)
-    {
-        float duration = 0;
-        while (duration < _drawDuration)
-        {
-            float t = duration / _drawDuration;
-
-            card.transform.eulerAngles = new Vector3(card.transform.eulerAngles.x, 180 * (1 - t), card.transform.eulerAngles.z);
-            if (t > 0.5f)
-            {
-                //GameObject back = card.transform.Find("Back").gameObject;
-                //Debug.Assert(back == null, "You don't have a Back child in card game object");
-                back.SetActive(false);
-            }
-
-            yield return null;
-            duration += Time.deltaTime;
-        }
-
-        card.transform.eulerAngles = new Vector3(card.transform.eulerAngles.x, 0, card.transform.eulerAngles.z);
-    }
 }

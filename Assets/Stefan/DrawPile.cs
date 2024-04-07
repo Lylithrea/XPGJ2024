@@ -6,8 +6,8 @@ using UnityEngine;
 public class DrawPile : MonoBehaviour
 {
     [SerializeField] GameObject _cardPrefab;
-    [SerializeField] List<SO_Card> _cards = new List<SO_Card>();
     [SerializeField] Hand _hand;
+    List<SO_Card> _cards = new List<SO_Card>();
 
     public ReadOnlyCollection<SO_Card> Cards { get; private set; }
 
@@ -16,13 +16,23 @@ public class DrawPile : MonoBehaviour
         Cards = _cards.AsReadOnly();
     }
 
+    public void PutCardInPile( SO_Card card)
+    {
+        _cards.Add(card);
+    }
+
     public GameObject GetCard()
     {
-        GameObject a = Instantiate(_cardPrefab, transform);
-        a.GetComponentInChildren<CardHandler>().SetupCard(_cards[Random.Range(0, _cards.Count)]);
-        a.transform.position = transform.position;
 
-        return a;
+        var card = _cards[Random.Range(0, _cards.Count)];
+
+        if (card == null) return null;
+        
+        GameObject cardObj = Instantiate(_cardPrefab, transform);
+        cardObj.GetComponentInChildren<CardHandler>().SetupCard(card);
+        cardObj.transform.position = transform.position;
+        _cards.Remove(card);
+        return cardObj;
     }
 
     public GameObject GetCard(SO_Card card)
@@ -38,4 +48,5 @@ public class DrawPile : MonoBehaviour
     {
         return transform.childCount > 1;
     }
+
 }
