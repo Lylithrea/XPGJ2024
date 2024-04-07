@@ -17,7 +17,7 @@ MonoBehaviour:
   godColor: {r: 0.8962264, g: 0.4185208, b: 0.8740075, a: 1}
   godDescription: Socializing
   godLevel: 0
-  godSprite: {fileID: 0}
+  godSprite: {fileID: -1404249392, guid: 49d7ed97669413d4e9264a3630c04108, type: 3}
   godLevelStats: feffffffffffffff000000000100000002000000
   maxFavour: 100
   currentFavour: 50

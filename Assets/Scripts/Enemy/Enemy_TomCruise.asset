@@ -10,27 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a253bceaf0272164ba74dab65bc96319, type: 3}
-  m_Name: Enemy_Cop
+  m_Name: Enemy_TomCruise
   m_EditorClassIdentifier: 
-  enemyName: Police
-  enemySprite: {fileID: 21300000, guid: 71e6563c4cc88a642961138461de59d2, type: 3}
-  maxHealth: 150
+  enemyName: Scientoly-Guy
+  enemySprite: {fileID: 21300000, guid: feaec72ab6787de42849a34d3a6a7da3, type: 3}
+  maxHealth: 666
   enemyHealthPatterns:
   - healthPercentage: 0
     attackPattern:
     - attackList:
       - attackIndication: {fileID: 0}
+        damage: 20
+        shield: 0
+        heal: 0
+      - attackIndication: {fileID: 0}
         damage: 10
+        shield: 0
+        heal: 5
+      - attackIndication: {fileID: 0}
+        damage: 0
+        shield: 0
+        heal: 10
+    - attackList:
+      - attackIndication: {fileID: 0}
+        damage: 2
         shield: 0
         heal: 0
       - attackIndication: {fileID: 0}
         damage: 2
         shield: 0
         heal: 0
-      - attackIndication: {fileID: 0}
-        damage: 0
-        shield: 0
-        heal: 10
     - attackList:
       - attackIndication: {fileID: 0}
         damage: 0
@@ -38,8 +47,8 @@ MonoBehaviour:
         heal: 0
       - attackIndication: {fileID: 0}
         damage: 0
-        shield: 0
-        heal: 2
+        shield: 3
+        heal: 0
   currentHealthCatagory: 0
-  currentPattern: 1
+  currentPattern: 2
   currentAttack: 0

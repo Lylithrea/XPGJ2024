@@ -377,13 +377,14 @@ MonoBehaviour:
   possibleEnemies:
   - {fileID: 11400000, guid: c4e6ea24e1a635a419cef2c72e93e430, type: 2}
   - {fileID: 11400000, guid: 089c4735c585df644998761b9e386b42, type: 2}
+  - {fileID: 11400000, guid: b5f0d0cf5d50ec24983393e007a20fe3, type: 2}
   bossEnemies:
-  - {fileID: 11400000, guid: c4e6ea24e1a635a419cef2c72e93e430, type: 2}
+  - {fileID: 11400000, guid: 2774865cd1797c94881c363bf3ea65dc, type: 2}
   map: {fileID: 1367791554}
   nodeParent: {fileID: 750403136}
   lineParent: {fileID: 1293458747}
   enemyIcon: {fileID: 764586905, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
-  bossIcon: {fileID: 0}
+  bossIcon: {fileID: 21300000, guid: 557bb6a5d05472a449df201bdd5bee45, type: 3}
   chestIcon: {fileID: -260955836, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
   campfireIcon: {fileID: -1146933986, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
   mapAnimationDuration: 1
@@ -2408,10 +2409,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chest: {fileID: 454564330}
-  openChest: {fileID: 0}
+  openChest: {fileID: 21300000, guid: dd6966b8eca90104fbcc5f25c22395e4, type: 3}
   chestBackground: {fileID: 21300000, guid: 8c108f4c553753444afd3b1d5ea6eccc, type: 3}
   rewardCount: 3
-  rewardScreen: {fileID: 0}
+  rewardScreen: {fileID: 1218895991}
   gridParent: {fileID: 0}
 --- !u!1 &808912431
 GameObject:
@@ -5604,8 +5605,8 @@ MonoBehaviour:
   - {fileID: -620544441, guid: 2c88f21a9cb20b7478d974c4dbd86faf, type: 3}
   cardPrefab: {fileID: 3759881088240045622, guid: 8225c606460a6724f9a3e232a2da9137, type: 3}
   maxSize: 10
-  xOffset: 25
-  ySpace: 10
+  xOffset: 50
+  ySpace: 25
 --- !u!224 &1874953939 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4885288406261186145, guid: 98b05518b52772641a4fce2c11c1fd62, type: 3}
