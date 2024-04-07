@@ -27,7 +27,6 @@ public class MapHandler : MonoBehaviour
 
     [SerializeField] List<Node> _checkedNodes = new();
     List<Node> _newNodes = new();
-    List<Node> _convergingNodes = new();
 
     public List<Node> allNodes = new List<Node> ();
 
@@ -97,77 +96,101 @@ public class MapHandler : MonoBehaviour
 
             for (int i = 0; i < _checkedNodes.Count; i++)
             {
+                var node = _checkedNodes[i];
 
+                //algorithm that guarantees at least one node spawn
                 float totalChance = _stayNodeChance + _convergeNodeChance + _divergeNodeChance;
                 float rand = Random.Range(0f, totalChance);
                 float cumulativeChance = _stayNodeChance;
-                //Node newNode = new Node();
 
-                var node = _checkedNodes[i];
                 if (rand < cumulativeChance)
                 {
-                    Node newNode = CreateNode(node, j);
-                    node.nextNodes.Add(newNode);
-                    node.Type = NodeType.Stay;
+                    CreateStayNode(node, j);
 
                 }
                 else if (rand < (cumulativeChance += _convergeNodeChance))
                 {
                     //if there aren't stay or diverge nodes, 
                     if (_checkedNodes.Any(n => n.Type != NodeType.Converge))
-                    {
-                        _convergingNodes.Add(node);
-                        node.img.color = Color.blue;
-                        node.Type = NodeType.Converge;
-
-                    }
+                        PrepareConvergeNode(node);
                     else
-                    {
-                        Node newNode = CreateNode(node, j);
-                        node.nextNodes.Add(newNode);
-                        node.Type = NodeType.Stay;
-                    }
+                        CreateStayNode(node, j);
 
                 }
                 else if (rand < (cumulativeChance += _divergeNodeChance))
                 {
-                    //if curr number of nodes is bigger than max width - 1, don't do a _diverge, but a stay
                     if (_checkedNodes.Count <= _mapWidth - 1)
-                    {
-                        Node newNode1 = CreateNode(node, j);
-                        node.nextNodes.Add(newNode1);
-                        node.Type = NodeType.Diverge;
-                        node.img.color = Color.red;
-
-                    }
-
-                    Node newNode = CreateNode(node, j);
-                    node.nextNodes.Add(newNode);
-                    node.Type = NodeType.Stay;
+                        CreateDivergeNode(node, j);
+                    else
+                        CreateStayNode(node, j);
                 }
 
             }
 
-            for (int i = 0; i < _checkedNodes.Count; i++)
-            {
-                var node = _checkedNodes[i];
-                if (node.Type == NodeType.Converge)
-                {
-                    var closestNum = Utils.ClosestNumberInRange(0, _newNodes.Count - 1, i);
-                    _newNodes[closestNum].PreviousNodes.Add(node);
-                    node.nextNodes.Add(_newNodes[closestNum]);
-                }
+            ////position nodes
+            //Vector3 firstNodePos = _checkedNodes[0].transform.localPosition;
+            //Vector3 secondNodePos = _checkedNodes[_checkedNodes.Count-1].transform.localPosition;
+            //Vector3 dir = ( secondNodePos - firstNodePos).normalized;
+            //Vector3 normal = new (-dir.y, dir.x);
 
-            }
+            //Vector3 centerOfPreviousNodes = Vector2.Lerp(firstNodePos, secondNodePos , .5f);
+
+            //Vector3 positionInFront = centerOfPreviousNodes + _spacing * .5f * j * normal ;
+            //Vector3 centerOfNewNodes = Vector2.Lerp(_newNodes[0].transform.localPosition, _newNodes[_newNodes.Count-1].transform.localPosition,.5f);
+            //Vector3 offset = positionInFront - centerOfNewNodes;
+
+            //foreach (var item in _newNodes)
+            //{
+            //    item.transform.localPosition += offset;
+            //}
+            ConnectConvergeNodes();
 
             var copy = _checkedNodes;
             _checkedNodes = _newNodes;
             _newNodes = copy;
             _newNodes.Clear();
-            _convergingNodes.Clear();
         }
 
         CreateBoss();
+    }
+
+    void PrepareConvergeNode(Node parentNode)
+    {
+        parentNode.Type = NodeType.Converge;
+    }
+
+    void ConnectConvergeNodes()
+    {
+        //connect to closest next node
+        for (int i = 0; i < _checkedNodes.Count; i++)
+        {
+            var node = _checkedNodes[i];
+            if (node.Type == NodeType.Converge)
+            {
+                var closestNum = Utils.ClosestNumberInRange(0, _newNodes.Count - 1, i);
+                _newNodes[closestNum].PreviousNodes.Add(node);
+                node.nextNodes.Add(_newNodes[closestNum]);
+            }
+
+        }
+    }
+
+    void CreateStayNode(Node parentNode, int height)
+    {
+        Node newNode = CreateNode(parentNode, height);
+        parentNode.nextNodes.Add(newNode);
+        parentNode.Type = NodeType.Stay;
+    }
+
+    void CreateDivergeNode(Node parentNode, int height)
+    {
+            Node newNode1 = CreateNode(parentNode, height);
+            parentNode.nextNodes.Add(newNode1);
+            parentNode.Type = NodeType.Diverge;
+
+            Node newNode = CreateNode(parentNode, height);
+            parentNode.nextNodes.Add(newNode);
+
     }
 
     void PositionInitialNodes()
@@ -220,8 +243,11 @@ public class MapHandler : MonoBehaviour
         newNode.PreviousNodes.Add(node);
         _newNodes.Add(newNode);
         allNodes.Add(newNode);
-        newNode.transform.localPosition = _spacing * yIndex * Vector3.up + _spacing * (_newNodes.Count - 1) * Vector3.right + new Vector3(Random.Range(-offset, offset), Random.Range(-offset, offset), 0);
-        newNode.transform.localRotation = Quaternion.Euler(0, 0, nodeParent.localRotation.eulerAngles.z * -1);
+
+        newNode.transform.SetLocalPositionAndRotation(
+            _spacing * yIndex * Vector3.up + _spacing * (_newNodes.Count - 1) * Vector3.right + new Vector3(Random.Range(-offset, offset), Random.Range(-offset, offset), 0), 
+            Quaternion.Euler(0, 0, nodeParent.localRotation.eulerAngles.z * -1)
+        );
 
         float chestRand = Random.Range(0, 1f);
         float campfireRand = Random.Range(0, 1f);
@@ -267,8 +293,6 @@ public class MapHandler : MonoBehaviour
         var rectTransf = go.GetComponent<RectTransform>();
 
         rectTransf.localPosition = Vector2.Lerp(start, end, .5f);
-
-        //rectTransf.up = (start - end).normalized;
 
         rectTransf.localRotation = Quaternion.Euler(0, 0, Mathf.Atan2((end.y - start.y) , (end.x - start.x)) * Mathf.Rad2Deg - 90f);
         rectTransf.sizeDelta = new Vector2(_lineThickness, Vector2.Distance(start, end));

@@ -1775,6 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b06a2c562a58832489138d2c7466baf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBackground: {fileID: 0}
   maxHealth: 0
   currentHealth: 0
   enemyName: {fileID: 1009396893}
@@ -2459,6 +2460,12 @@ MonoBehaviour:
   enemies:
   - {fileID: 11400000, guid: c4e6ea24e1a635a419cef2c72e93e430, type: 2}
   - {fileID: 11400000, guid: 089c4735c585df644998761b9e386b42, type: 2}
+  background: {fileID: 0}
+  ChestHandler: {fileID: 0}
+  CampfireHandler: {fileID: 0}
+  objectOfInterest: {fileID: 0}
+  objectOfInterestText: {fileID: 0}
+  continueButton: {fileID: 0}
 --- !u!1 &2135404607
 GameObject:
   m_ObjectHideFlags: 0
