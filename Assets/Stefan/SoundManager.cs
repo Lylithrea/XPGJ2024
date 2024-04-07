@@ -34,7 +34,7 @@ public enum SoundName
     MapOpen,
     MapHover
 }
-
+[Serializable]
 class SourceInfo
 {
     public AudioSource AudioSource;
@@ -49,7 +49,7 @@ class SourceInfo
 
 public class SoundManager : MonoBehaviour
 {
-    readonly List<SourceInfo> _activeSources = new();
+    [SerializeField] List<SourceInfo> _activeSources = new();
     Stack<AudioSource> _inactiveSources;
     public static SoundManager Instance { get; private set; }
     void Awake()
@@ -108,7 +108,7 @@ public class SoundManager : MonoBehaviour
             source.Stop();
     }
 
-    public void PlayBattleMusic(float volume = .5f)
+    public void PlayBattleMusic(float volume = .3f)
     {
         var source = GetSource("BattleStart");
         source.clip = SoundClips[SoundName.BattleStart];
@@ -131,7 +131,47 @@ public class SoundManager : MonoBehaviour
         if(loop != null) loop.Stop();
     }
 
-   
+    public void PlayMenuMusic(float volume = .3f)
+    {
+        
+
+        var source2 = GetSource("Menu");
+        source2.clip = SoundClips[SoundName.Menu];
+        source2.loop = true;
+        source2.volume = volume * _masterVolume;
+        //source2.PlayDelayed(source2.clip.length);
+    }
+
+    public void StopMenuMusic()
+    {
+        
+        var loop = FindSourceByName("Menu");
+
+        
+        if (loop != null) loop.Stop();
+    }
+
+    public void PlayRestMusic(float volume = .3f)
+    {
+
+
+        var source2 = GetSource("Rest");
+        source2.clip = SoundClips[SoundName.Rest];
+        source2.loop = true;
+        source2.volume = volume * _masterVolume;
+        //source2.PlayDelayed(source2.clip.length);
+    }
+
+    public void StopRestMusic()
+    {
+
+        var loop = FindSourceByName("Rest");
+
+
+        if (loop != null) loop.Stop();
+    }
+
+
 
     public void PlayButtonSound(float volume = 0.5f)
     {

@@ -20,8 +20,8 @@ public class MainMenu_Manager : MonoBehaviour
         
         SceneManager.LoadScene("CombatScene");
 
-        SoundManager.Instance.PlayBattleMusic();
-        SoundManager.Instance.StopSound("Menu");
+        
+       
     }
 
     public void OpenOptions()
