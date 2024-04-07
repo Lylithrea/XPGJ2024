@@ -7,7 +7,7 @@ public class DrawPile : MonoBehaviour
 {
     [SerializeField] GameObject _cardPrefab;
     [SerializeField] Hand _hand;
-    List<SO_Card> _cards = new List<SO_Card>();
+    [SerializeField] List<SO_Card> _cards = new List<SO_Card>();
 
 
 
@@ -26,11 +26,9 @@ public class DrawPile : MonoBehaviour
 
     public GameObject GetCard()
     {
-
+        if (_cards.Count == 0) return null;
         var card = _cards[Random.Range(0, _cards.Count)];
 
-        if (card == null) return null;
-        
         GameObject cardObj = Instantiate(_cardPrefab, transform);
         cardObj.GetComponentInChildren<CardHandler>().SetupCard(card);
         cardObj.transform.position = transform.position;

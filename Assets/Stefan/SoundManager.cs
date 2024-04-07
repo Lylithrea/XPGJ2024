@@ -7,10 +7,12 @@ using UnityEngine;
 public struct SoundData
 {
     public float Volume;
+    public string Name;
 
-    public SoundData(float volume)
+    public SoundData(float volume, string name = null)
     {
         Volume = volume;
+        Name = name;
     }
 }
 public enum SoundName
@@ -35,7 +37,7 @@ class SourceInfo
 {
     public AudioSource AudioSource;
     public string Name;
-
+    
     public SourceInfo(AudioSource audioSource, string name)
     {
         AudioSource = audioSource;
@@ -79,6 +81,7 @@ public class SoundManager : MonoBehaviour
         }
         var source = GetSource();
         source.clip = SoundClips[soundName];
+        source.volume *= _masterVolume;
         source.Play();
     }
 
@@ -89,22 +92,32 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"There is no sound named {soundName}");
             return;
         }
-        var source = GetSource();
+
+        var source = data.Name != null ? GetSource(data.Name) : GetSource();
+
         source.clip = SoundClips[soundName];
-        source.volume = data.Volume;
+        source.volume = data.Volume * _masterVolume;
         source.Play();
+    }
+
+    public void StopSound(string name)
+    {
+        var source = FindSourceByName(name);
+        if(source != null)
+            source.Stop();
     }
 
     public void PlayBattleMusic(float volume = .5f)
     {
         var source = GetSource("BattleStart");
         source.clip = SoundClips[SoundName.BattleStart];
-        source.volume = volume;
+        source.volume = volume * _masterVolume;
         source.Play();
+
         var source2 = GetSource("BattleLoop");
         source2.clip = SoundClips[SoundName.BattleLoop];
         source2.loop = true;
-        source2.volume = volume;
+        source2.volume = volume * _masterVolume;
         source2.PlayDelayed(source.clip.length);
     }
 
@@ -112,10 +125,9 @@ public class SoundManager : MonoBehaviour
     {
         var start = FindSourceByName("BattleStart");
         var loop = FindSourceByName("BattleLoop");
-        if(start != null)
-            start.Stop();
-        if(loop != null)
-            loop.Stop();
+
+        if(start != null) start.Stop();
+        if(loop != null) loop.Stop();
     }
 
     void InitSource(AudioSource source)
@@ -137,6 +149,7 @@ public class SoundManager : MonoBehaviour
         _activeSources.Add(new SourceInfo(source,null));
         source.enabled = true;
         source.loop = false;
+        source.volume = _masterVolume; 
         return source;
 
     }
@@ -153,8 +166,11 @@ public class SoundManager : MonoBehaviour
             source = _inactiveSources.Pop();
 
         _activeSources.Add(new SourceInfo(source, nameSource));
+
         source.loop = false;
+        source.volume = _masterVolume; 
         source.enabled = true;
+
         return source;
 
     }
