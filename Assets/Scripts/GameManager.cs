@@ -94,13 +94,16 @@ public class GameManager : MonoBehaviour
     {
         CampfireHandler.SetActive(true);
         SoundManager.Instance.StopBattleMusic();
-        SoundManager.Instance.PlaySound(SoundName.Rest);
+        SoundManager.Instance.StopMenuMusic();
+        SoundManager.Instance.PlayRestMusic();
     }
 
     public void SetupChest()
     {
         ChestHandler.SetActive(true);
-        SoundManager.Instance.PlaySound(SoundName.Reward);
+        SoundManager.Instance.StopMenuMusic();
+        SoundManager.Instance.StopRestMusic();
+        SoundManager.Instance.PlayRestMusic();
     }
 
     public void StartGame()
@@ -108,13 +111,16 @@ public class GameManager : MonoBehaviour
         //handle drawing cards
         //Animations etc?
         DeckHandler.Instance.FillHand();
+        SoundManager.Instance.StopMenuMusic();
+        SoundManager.Instance.StopRestMusic();
         SoundManager.Instance.PlayBattleMusic();
     }
 
     public void EndGame()
     {
         MapHandler.Instance.SetMapActive(true);
-        SoundManager.Instance.PlaySound(SoundName.Map);
+        SoundManager.Instance.PlayMenuMusic();
+        SoundManager.Instance.StopRestMusic();
         SoundManager.Instance.StopBattleMusic();
         DisableAllObjectsOfInterest();
     }
