@@ -86,6 +86,15 @@ public class DeckHandler : MonoBehaviour
         StartCoroutine(FillHand_Cr());
     }
 
+    public void ClearHand()
+    {
+        foreach (Transform child in _hand.gameObject.transform)
+        {
+            Destroy(child);
+        }
+        _hand.ClearHand();
+    }
+
     public void DiscardCard(GameObject card)
     {
         var draw = card.GetComponent<DragDropHandler>();

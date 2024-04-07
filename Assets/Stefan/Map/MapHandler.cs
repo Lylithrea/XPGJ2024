@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ public class MapHandler : MonoBehaviour
 
     [SerializeField] float offset;
 
+    public float chestChance = 0.1f;
+    public float campfireChance = 0.1f;
+
     public Node playerNode;
 
     [SerializeField] List<Node> _checkedNodes = new();
@@ -31,6 +35,13 @@ public class MapHandler : MonoBehaviour
 
     public static MapHandler Instance;
     public GameObject map;
+    public Transform nodeParent;
+    public Transform lineParent;
+
+
+    public Sprite enemyIcon;
+    public Sprite chestIcon;
+    public Sprite campfireIcon;
 
 
     public void Awake()
@@ -167,12 +178,15 @@ public class MapHandler : MonoBehaviour
             node.transform.localPosition = _spacing * i * Vector3.right;
             node.SetInteractible(true);
             allNodes.Add(node);
+            node.catagory = NodeCatagory.Enemy;
             node.enemy = possibleEnemies[Random.Range(0, possibleEnemies.Count)];
+            node.transform.localRotation = Quaternion.Euler(0, 0, nodeParent.localRotation.eulerAngles.z * -1);
+            node.Setup();
         }
     }
     void CreateBoss()
     {
-        var bossNode = Instantiate(_nodePrefab, transform);
+        var bossNode = Instantiate(_nodePrefab, nodeParent);
         bossNode.transform.localPosition = Vector3.Lerp(_checkedNodes[0].transform.localPosition, _checkedNodes[_checkedNodes.Count - 1].transform.localPosition, 0.5f);
         bossNode.transform.localPosition += _spacing * Vector3.up;
 
@@ -183,15 +197,50 @@ public class MapHandler : MonoBehaviour
         _checkedNodes.Add(bossNode);
     }
 
+
+    public Sprite GetIcon(NodeCatagory catagory)
+    {
+        switch (catagory)
+        {
+            case NodeCatagory.Enemy:
+                return enemyIcon;
+            case NodeCatagory.Chest:
+                return chestIcon;
+            case NodeCatagory.Campfire:
+                return campfireIcon;
+            default:
+                Debug.LogWarning("Trying to get icon for node catagory that does not exist.");
+                return null;
+        }
+    }
+
     Node CreateNode(Node node, int yIndex)
     {
-        var newNode = Instantiate(_nodePrefab, transform);
+        var newNode = Instantiate(_nodePrefab, nodeParent);
         newNode.PreviousNodes.Add(node);
         _newNodes.Add(newNode);
         allNodes.Add(newNode);
         newNode.transform.localPosition = _spacing * yIndex * Vector3.up + _spacing * (_newNodes.Count - 1) * Vector3.right + new Vector3(Random.Range(-offset, offset), Random.Range(-offset, offset), 0);
-        newNode.enemy = possibleEnemies[Random.Range(0, possibleEnemies.Count)];
+        newNode.transform.localRotation = Quaternion.Euler(0, 0, nodeParent.localRotation.eulerAngles.z * -1);
+
+        float chestRand = Random.Range(0, 1f);
+        float campfireRand = Random.Range(0, 1f);
+        if (chestRand < chestChance)
+        {
+            newNode.catagory = NodeCatagory.Chest;
+        }
+        else if (campfireRand < campfireChance)
+        {
+            newNode.catagory = NodeCatagory.Campfire;
+        }
+        else
+        {
+            newNode.catagory = NodeCatagory.Enemy;
+            newNode.enemy = possibleEnemies[Random.Range(0, possibleEnemies.Count)];
+        }
+        newNode.Setup();
         return newNode;
+        
     }
 
     void ConnectNode(Node node)
@@ -214,7 +263,7 @@ public class MapHandler : MonoBehaviour
     {
         var go = new GameObject("Line").AddComponent<Image>();
         go.color = Color.red;
-        go.transform.SetParent(transform);
+        go.transform.SetParent(lineParent);
         var rectTransf = go.GetComponent<RectTransform>();
 
         rectTransf.localPosition = Vector2.Lerp(start, end, .5f);

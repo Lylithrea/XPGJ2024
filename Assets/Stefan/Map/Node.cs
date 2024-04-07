@@ -7,12 +7,21 @@ public enum NodeType
     Stay,
     Diverge
 }
+
+public enum NodeCatagory
+{
+    Enemy,
+    Chest,
+    Campfire
+}
+
 public class Node : MonoBehaviour
 {
     public List<Node> nextNodes = new List<Node>();
     public List<Node> PreviousNodes  { get; set; } = new();
     public bool Connected { get; set; }
     public NodeType Type { get; set; }
+    public NodeCatagory catagory;
 
     public Image img;
 
@@ -27,6 +36,11 @@ public class Node : MonoBehaviour
     {
         img = GetComponent<Image>();
         SetInteractible(isInteractible);
+    }
+
+    public void Setup()
+    {
+        img.sprite = MapHandler.Instance.GetIcon(catagory);
     }
 
 
@@ -47,8 +61,25 @@ public class Node : MonoBehaviour
     public void OnClick()
     {
         MapHandler.Instance.updatePlayerPosition(this);
-        GameManager.Instance.SetEnemy(enemy);
         MapHandler.Instance.SetMapActive(false);
+
+        switch (catagory)
+        {
+            case NodeCatagory.Enemy:
+                GameManager.Instance.SetEnemy(enemy);
+                GameManager.Instance.StartGame();
+                break;
+            case NodeCatagory.Chest:
+                GameManager.Instance.SetupChest();
+                break;
+            case NodeCatagory.Campfire:
+                GameManager.Instance.SetupCampfire();
+                break;
+            default:
+                Debug.LogWarning("Tried loading an node catagory that does not exist.");
+                break;
+        }
+
     }
 
 

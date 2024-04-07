@@ -48,6 +48,9 @@ public class Hand : MonoBehaviour
         cards.Remove(card);
     }
 
-
+    public void ClearHand()
+    {
+        cards.Clear();
+    }
 
 }
