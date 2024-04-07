@@ -10,6 +10,8 @@ public class SO_Enemy : ScriptableObject
     public Sprite enemySprite;
     public int maxHealth;
 
+    public AnimationCurve difficultyCurve;
+
 
 
     public List<EnemyHealthPattern> enemyHealthPatterns = new List<EnemyHealthPattern>();

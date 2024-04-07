@@ -61,13 +61,17 @@ public class Node : MonoBehaviour
 
     public void OnClick()
     {
-        SoundManager.Instance.PlaySound(SoundName.MapHover);
+
         MapHandler.Instance.updatePlayerPosition(this);
         MapHandler.Instance.SetMapActive(false);
 
         switch (catagory)
         {
             case NodeCatagory.Enemy:
+                GameManager.Instance.SetEnemy(enemy);
+                GameManager.Instance.StartGame();
+                break;
+            case NodeCatagory.Boss:
                 GameManager.Instance.SetEnemy(enemy);
                 GameManager.Instance.StartGame();
                 break;

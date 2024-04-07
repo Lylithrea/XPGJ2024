@@ -43,8 +43,8 @@ public class EnemyHandler : MonoBehaviour
 
     public void Setup(SO_Enemy enemy)
     {
-        maxHealth = enemy.maxHealth;
-        currentHealth = enemy.maxHealth;
+        maxHealth = Mathf.FloorToInt( enemy.maxHealth * enemy.difficultyCurve.Evaluate((float)MapHandler.Instance.level / MapHandler.Instance._mapLength)) ;
+        currentHealth = maxHealth;
 
         currentEnemy = enemy;
 

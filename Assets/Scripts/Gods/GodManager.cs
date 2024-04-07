@@ -67,11 +67,11 @@ public class GodManager : MonoBehaviour
     {
         if (follower.GetComponent<CardHandler>().followerCard.followingGod == god)
         {
-            AdjustFavour(god, 15);
+            AdjustFavour(god, 25);
         }
         else
         {
-            AdjustFavour(god, 5);
+            AdjustFavour(god, 15);
         }
 
         switch (god)

@@ -12,7 +12,7 @@ public class MapHandler : MonoBehaviour
     [SerializeField] float _stayNodeChance;
     [SerializeField] float _divergeNodeChance;
     [SerializeField] float _lineThickness;
-    [SerializeField] int _mapLength;
+    [SerializeField] public int _mapLength;
     [SerializeField] int _mapWidth;
 
     [SerializeField] float _spacing;
@@ -47,6 +47,8 @@ public class MapHandler : MonoBehaviour
 
     public Color roadColor;
 
+    public int level = 1;
+
     public void Awake()
     {
         if (Instance == null)
@@ -64,11 +66,13 @@ public class MapHandler : MonoBehaviour
         }
         playerNode = node;
         playerNode.SetNextInteractible();
+        level++;
     }
 
 
     public void SetMapActive(bool isActive)
     {
+        SoundManager.Instance.PlaySound(SoundName.MapHover, new SoundData(0.5f));
         //map.SetActive(isActive);
         if (isActive)
         {

@@ -523,6 +523,7 @@ MonoBehaviour:
   campfireIcon: {fileID: -1146933986, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
   mapAnimationDuration: 1
   roadColor: {r: 0.2264151, g: 0.17243591, b: 0.12459949, a: 1}
+  level: 1
 --- !u!1 &174443806
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,10 +4307,10 @@ RectTransform:
   - {fileID: 1017342760}
   - {fileID: 750109721}
   - {fileID: 1579467945}
-  - {fileID: 1218895992}
-  - {fileID: 135072907}
   - {fileID: 808889468}
   - {fileID: 1077052560}
+  - {fileID: 1218895992}
+  - {fileID: 135072907}
   - {fileID: 796719769}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

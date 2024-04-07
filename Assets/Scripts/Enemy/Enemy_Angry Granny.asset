@@ -15,6 +15,30 @@ MonoBehaviour:
   enemyName: Angry Granny
   enemySprite: {fileID: 21300000, guid: dd854e8f17dddc04fa5a45a8c61c3d3b, type: 3}
   maxHealth: 13
+  difficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.99999857
+      value: 4.9656286
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   enemyHealthPatterns:
   - healthPercentage: 0
     attackPattern:
@@ -50,5 +74,5 @@ MonoBehaviour:
         shield: 0
         heal: 0
   currentHealthCatagory: 0
-  currentPattern: 2
+  currentPattern: 0
   currentAttack: 0
