@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Image objectOfInterest;
     public TextMeshProUGUI objectOfInterestText;
 
+    public GameObject continueButton;
 
 
 
@@ -75,6 +76,25 @@ public class GameManager : MonoBehaviour
         EnemyHandler.SetActive(false);
         CampfireHandler.SetActive(false);
         ChestHandler.SetActive(false);
+        continueButton.SetActive(false);
+    }
+
+    public void OnClickContinue()
+    {
+        EndGame();
+    }
+
+
+    public void HandleCardReward(SO_Card card)
+    {
+        ChestHandler.ClosePopup();
+        //add card to deck
+        continueButton.SetActive(true);
+    }
+
+    public void EnableContinueButton()
+    {
+        continueButton.SetActive(true);
     }
 
     public void SetupCampfire()
