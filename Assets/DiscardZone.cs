@@ -18,7 +18,7 @@ public class DiscardZone : MonoBehaviour, ICardInteractable
         DeckHandler.Instance.DiscardCard(card);
 
 
-        GameManager.Instance.UseFollower(card);
+        GameManager.Instance.PlayerManager.DoAttack(card);
         //flipper.FlipToBack();
     }
 

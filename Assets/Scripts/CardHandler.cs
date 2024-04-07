@@ -13,6 +13,8 @@ public class CardHandler : MonoBehaviour
     [SerializeField] private Image followerImage;
     [SerializeField] private GameObject inactiveSprite;
 
+    public Button RewardButton;
+
 
     public int adjustedDamage;
     public int adjustedHealing;
@@ -23,9 +25,15 @@ public class CardHandler : MonoBehaviour
 
     public SO_Card followerCard;
 
-    public void Start()
+
+    public void isRewardCard(bool isReward)
     {
-        SetupCard(followerCard);
+        RewardButton.gameObject.SetActive(isReward);
+    }
+
+    public void onClickReward()
+    {
+        GameManager.Instance.HandleCardReward(followerCard);
     }
 
     public void SetupCard(SO_Card card)

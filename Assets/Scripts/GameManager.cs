@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Image objectOfInterest;
     public TextMeshProUGUI objectOfInterestText;
 
+    public GameObject continueButton;
 
 
 
@@ -75,6 +76,26 @@ public class GameManager : MonoBehaviour
         EnemyHandler.SetActive(false);
         CampfireHandler.SetActive(false);
         ChestHandler.SetActive(false);
+        continueButton.SetActive(false);
+    }
+
+    public void OnClickContinue()
+    {
+        EndGame();
+    }
+
+
+    public void HandleCardReward(SO_Card card)
+    {
+        ChestHandler.ClosePopup();
+        //add card to deck
+        DeckHandler.Instance.Deck.Add(card);
+        continueButton.SetActive(true);
+    }
+
+    public void EnableContinueButton()
+    {
+        continueButton.SetActive(true);
     }
 
     public void SetupCampfire()
@@ -98,19 +119,6 @@ public class GameManager : MonoBehaviour
     {
         MapHandler.Instance.SetMapActive(true);
         DisableAllObjectsOfInterest();
-    }
-
-    public void UseFollower(GameObject follower)
-    {
-        GodManager.instance.UseFollower();
-        CardStats cardStats = follower.GetComponent<CardHandler>().GetCardStats();
-        EnemyHandler.TakeDamage(cardStats.damage);
-        PlayerManager.Heal(cardStats.healing);
-        PlayerManager.AddShield(cardStats.shield);
-        for (int i = 0; i < cardStats.draw; i++)
-        {
-            DeckHandler.Instance.PutCardInHand();
-        }
     }
 
 }

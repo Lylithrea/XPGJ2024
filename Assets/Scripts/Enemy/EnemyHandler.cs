@@ -1,8 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum DebuffType
+{
+    Weak,
+    Ailment
+}
+
+public struct Debuff
+{
+    public DebuffType Type;
+    public float value;
+
+    public Debuff(DebuffType type, float value)
+    {
+        Type = type;
+        this.value = value;
+    }
+}
 
 public class EnemyHandler : MonoBehaviour
 {
@@ -19,6 +38,8 @@ public class EnemyHandler : MonoBehaviour
     public int currentShield;
 
     SO_Enemy currentEnemy;
+
+    readonly List<Debuff> _debuffs = new ();
 
     public void Setup(SO_Enemy enemy)
     {
@@ -39,16 +60,36 @@ public class EnemyHandler : MonoBehaviour
         healthSlider.gameObject.SetActive(isActive);
     }
 
-
+    public void AddDebuff(Debuff debuff)
+    {
+        _debuffs.Add(debuff);
+    }
 
     public void DoAttack()
     {
         currentShield = 0;
         Attack attack = currentEnemy.GetAttack(currentHealth);
         currentEnemy.IncreaseAttack(currentHealth);
-        Debug.Log("Enemy attack for " + attack.damage + " damage!");
-        GameManager.Instance.PlayerManager.TakeDamage(attack.damage);
-        Heal(attack.heal);
+
+        
+        if(_debuffs.Any(x => x.Type == DebuffType.Weak))
+        {
+            Debug.Log("Enemy attack for " + attack.damage + " damage!");
+            GameManager.Instance.PlayerManager.TakeDamage(attack.damage / 2);
+
+        }
+        else
+        {
+            Debug.Log("Enemy attack for " + attack.damage + " damage!");
+            GameManager.Instance.PlayerManager.TakeDamage(attack.damage);
+        }
+
+        if (_debuffs.Any(x => x.Type == DebuffType.Weak))
+            Heal(attack.heal / 2);
+        else
+            Heal(attack.heal);
+
+        _debuffs.Clear();
     }
 
     public void AddShield(int amount)
