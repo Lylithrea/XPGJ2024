@@ -289,7 +289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &135072907
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1513,6 +1513,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577534478}
   m_CullTransparentMesh: 1
+--- !u!1 &623786244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 623786245}
+  - component: {fileID: 623786246}
+  - component: {fileID: 623786247}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &623786245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623786244}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &623786246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623786244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9e7ad2885f1b740adff52e44b5d3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _masterVolume: 1
+  SoundClips:
+    _serializedList:
+    - Key: 4
+      Value: {fileID: 8300000, guid: 8c97a1e101f1b354f9992633e78c9378, type: 3}
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 0}
+    - Key: 5
+      Value: {fileID: 0}
+    - Key: 6
+      Value: {fileID: 0}
+    - Key: 7
+      Value: {fileID: 0}
+    - Key: 8
+      Value: {fileID: 8300000, guid: a624cfc0e23287c4a90bc9888b552744, type: 3}
+    - Key: 9
+      Value: {fileID: 8300000, guid: 2ef51bfd39028ba4d9e302a8b83fc482, type: 3}
+    - Key: 10
+      Value: {fileID: 8300000, guid: 27a53ac0cf5c04e4999c751c085f0535, type: 3}
+    - Key: 3
+      Value: {fileID: 8300000, guid: cdb83d13934b92a4aa05ba66dcd5f8eb, type: 3}
+    - Key: 0
+      Value: {fileID: 0}
+    - Key: 11
+      Value: {fileID: 8300000, guid: 40d7c7f1e5b0963408f1a0f0c8df380a, type: 3}
+    - Key: 12
+      Value: {fileID: 8300000, guid: ac50009e5d9b9df47832ca3e2f567441, type: 3}
+    - Key: 13
+      Value: {fileID: 8300000, guid: f7174895f65042c45952581984a350eb, type: 3}
+--- !u!81 &623786247
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623786244}
+  m_Enabled: 1
 --- !u!1 &624970291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,6 +1682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 678429355}
   - component: {fileID: 678429356}
+  - component: {fileID: 678429357}
   m_Layer: 5
   m_Name: DeckManager
   m_TagString: Untagged
@@ -1641,7 +1726,7 @@ MonoBehaviour:
   _hand: {fileID: 750109718}
   _waitUntilNext: 0.2
   test: 0
-  _discardSpot: {fileID: 521998795}
+  _discardPile: {fileID: 521998795}
   _discardTween:
     Duration: 0.2
     Easing: 1
@@ -1650,6 +1735,45 @@ MonoBehaviour:
     Easing: 1
   _handDrawPrefab: {fileID: 5359415531105183421, guid: 15831414d87b8cc478d2ab66e342eab7, type: 3}
   back: {fileID: 0}
+  Deck:
+  - {fileID: 11400000, guid: d2cf6fe0f4597f942b2555cf1b67d298, type: 2}
+  - {fileID: 11400000, guid: 7f092cd60c83b6a4a9c1ef36587bd019, type: 2}
+  - {fileID: 11400000, guid: 293d33d6ae8732a43b45a5f4569a0f32, type: 2}
+  - {fileID: 11400000, guid: b9eccda59119b7a41aecdd11d15eb895, type: 2}
+  - {fileID: 11400000, guid: d0f557ed09bef9840850843e834fa511, type: 2}
+  - {fileID: 11400000, guid: e6200eca670a2194b8a5a74def3864e5, type: 2}
+  - {fileID: 11400000, guid: c275cfea0431ea0418def0f02493ada7, type: 2}
+  - {fileID: 11400000, guid: 2fc53b8b89b0e8b42bfc2654830a04a6, type: 2}
+  - {fileID: 11400000, guid: 2919261ce7221c24fb79d5951eaa82b8, type: 2}
+  - {fileID: 11400000, guid: 76ee608cf64cfd74ca00af30fc5f203b, type: 2}
+  - {fileID: 11400000, guid: bec25142abbee93498014b5176c27201, type: 2}
+  - {fileID: 11400000, guid: b0ab1d483b6420a49860133a60bb70c1, type: 2}
+--- !u!114 &678429357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678429354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1490640bd365d47bb85fd8256b2818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allCards:
+  - {fileID: 11400000, guid: d2cf6fe0f4597f942b2555cf1b67d298, type: 2}
+  - {fileID: 11400000, guid: 7f092cd60c83b6a4a9c1ef36587bd019, type: 2}
+  - {fileID: 11400000, guid: 293d33d6ae8732a43b45a5f4569a0f32, type: 2}
+  - {fileID: 11400000, guid: b9eccda59119b7a41aecdd11d15eb895, type: 2}
+  - {fileID: 11400000, guid: d0f557ed09bef9840850843e834fa511, type: 2}
+  - {fileID: 11400000, guid: e6200eca670a2194b8a5a74def3864e5, type: 2}
+  - {fileID: 11400000, guid: c275cfea0431ea0418def0f02493ada7, type: 2}
+  - {fileID: 11400000, guid: 2fc53b8b89b0e8b42bfc2654830a04a6, type: 2}
+  - {fileID: 11400000, guid: 2919261ce7221c24fb79d5951eaa82b8, type: 2}
+  - {fileID: 11400000, guid: 76ee608cf64cfd74ca00af30fc5f203b, type: 2}
+  - {fileID: 11400000, guid: bec25142abbee93498014b5176c27201, type: 2}
+  - {fileID: 11400000, guid: b0ab1d483b6420a49860133a60bb70c1, type: 2}
+  cardPrefab: {fileID: 1134506642533977894, guid: ee09d3aa7cc736443bd603ec8ef6dcc8, type: 3}
 --- !u!1 &682683375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2456,6 +2580,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chest: {fileID: 454564330}
   chestBackground: {fileID: 21300000, guid: 8c108f4c553753444afd3b1d5ea6eccc, type: 3}
+  rewardCount: 3
+  rewardScreen: {fileID: 0}
+  gridParent: {fileID: 0}
 --- !u!1 &808912431
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,7 +2629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeDuration: 0.1
-  shakeMagnitude: 0.1
+  shakeMagnitude: 15
   mainCamera: {fileID: 1926149004}
   zoomDuration: 0.1
   zoomMagnitude: 0.1
@@ -5636,6 +5763,7 @@ MonoBehaviour:
   CampfireHandler: {fileID: 1077052561}
   objectOfInterest: {fileID: 0}
   objectOfInterestText: {fileID: 0}
+  continueButton: {fileID: 0}
 --- !u!1 &1817119921
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,11 +5951,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPrefab: {fileID: 1134506642533977894, guid: ee09d3aa7cc736443bd603ec8ef6dcc8, type: 3}
-  _cards:
-  - {fileID: 11400000, guid: b0ab1d483b6420a49860133a60bb70c1, type: 2}
-  - {fileID: 11400000, guid: bec25142abbee93498014b5176c27201, type: 2}
-  - {fileID: 11400000, guid: d2cf6fe0f4597f942b2555cf1b67d298, type: 2}
-  - {fileID: 11400000, guid: 7f092cd60c83b6a4a9c1ef36587bd019, type: 2}
   _hand: {fileID: 750109718}
 --- !u!222 &1860825484
 CanvasRenderer:
@@ -6028,7 +6151,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1926149005}
   - component: {fileID: 1926149004}
-  - component: {fileID: 1926149003}
   - component: {fileID: 1926149006}
   m_Layer: 0
   m_Name: Main Camera
@@ -6037,14 +6159,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1926149003
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926149002}
-  m_Enabled: 1
 --- !u!20 &1926149004
 Camera:
   m_ObjectHideFlags: 0
@@ -6693,3 +6807,4 @@ SceneRoots:
   - {fileID: 1200334953}
   - {fileID: 1659893545}
   - {fileID: 1136009269}
+  - {fileID: 623786245}

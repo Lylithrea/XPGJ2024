@@ -169,6 +169,7 @@ public class JuiceManager : MonoBehaviour
     public void ScreenShake()
     {
         StartCoroutine(Shake());
+        SoundManager.Instance.PlaySound(SoundName.CharHit);
     }
 
     public void ScreenZoom()
