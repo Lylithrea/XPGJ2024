@@ -22,7 +22,6 @@ public class DeckHandler : MonoBehaviour
     [SerializeField] TweenData _discardTween;
     [SerializeField] TweenData _goToSpot;
     [SerializeField] DragDropHandler _handDrawPrefab;
-    [SerializeField] GameObject back;
 
     public static DeckHandler Instance;
 
@@ -78,6 +77,7 @@ public class DeckHandler : MonoBehaviour
         {
             foreach (var discardCard in _discardPile.DiscardedCards)
                 _drawPile.PutCardInPile (discardCard);
+            _discardPile.DiscardedCards.Clear();
             card = _drawPile.GetCard ();
 
             if (card == null)
