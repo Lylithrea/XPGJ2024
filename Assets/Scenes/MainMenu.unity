@@ -810,9 +810,9 @@ MonoBehaviour:
     - Key: 4
       Value: {fileID: 8300000, guid: 8c97a1e101f1b354f9992633e78c9378, type: 3}
     - Key: 1
-      Value: {fileID: 8300000, guid: a25652c052d88884bbb1860e3f9e8e3c, type: 3}
+      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 2
-      Value: {fileID: 8300000, guid: a25652c052d88884bbb1860e3f9e8e3c, type: 3}
+      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 5
       Value: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
     - Key: 6

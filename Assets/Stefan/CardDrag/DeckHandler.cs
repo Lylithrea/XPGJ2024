@@ -150,7 +150,7 @@ public class DeckHandler : MonoBehaviour
     public void SacrificeCard(GameObject card)
     {
         _hand.RemoveCard(card);
-        SoundManager.Instance.PlaySound(SoundName.CardSacrifice);
+        
     }
 
 

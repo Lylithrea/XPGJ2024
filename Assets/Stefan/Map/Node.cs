@@ -60,6 +60,7 @@ public class Node : MonoBehaviour
 
     public void OnClick()
     {
+        SoundManager.Instance.PlaySound(SoundName.MapHover);
         MapHandler.Instance.updatePlayerPosition(this);
         MapHandler.Instance.SetMapActive(false);
 

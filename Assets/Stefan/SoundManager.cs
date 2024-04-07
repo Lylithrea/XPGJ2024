@@ -7,10 +7,11 @@ using UnityEngine;
 public struct SoundData
 {
     public float Volume;
-
-    public SoundData(float volume)
+    public string Name;
+    public SoundData(float volume, string name = null)
     {
         Volume = volume;
+        Name = name;
     }
 }
 public enum SoundName
@@ -91,10 +92,17 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"There is no sound named {soundName}");
             return;
         }
-        var source = GetSource();
+        var source = data.Name != null ? GetSource(data.Name) : GetSource();
         source.clip = SoundClips[soundName];
         source.volume = data.Volume;
         source.Play();
+    }
+
+    public void StopSound(string name)
+    {
+        var source = FindSourceByName(name);
+        if(source != null)
+            source.Stop();
     }
 
     public void PlayBattleMusic(float volume = .5f)

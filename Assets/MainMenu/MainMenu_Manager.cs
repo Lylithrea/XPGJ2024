@@ -12,7 +12,7 @@ public class MainMenu_Manager : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.PlaySound(SoundName.Menu);
+        SoundManager.Instance.PlaySound(SoundName.Menu, new SoundData(1,"Menu"));
     }
 
     public void StartGame()
@@ -21,7 +21,7 @@ public class MainMenu_Manager : MonoBehaviour
         SceneManager.LoadScene("CombatScene");
 
         SoundManager.Instance.PlayBattleMusic();
-
+        SoundManager.Instance.StopSound("Menu");
     }
 
     public void OpenOptions()
