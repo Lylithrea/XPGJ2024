@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,8 @@ public class PlayerManager : MonoBehaviour
 
     public Slider healthSlider;
 
+    readonly List<Debuff> _debuffs = new();
 
-
-    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
@@ -52,6 +52,12 @@ public class PlayerManager : MonoBehaviour
         UpdateUI();
     }
 
+    public void AddDebuff(Debuff debuff)
+    {
+        _debuffs.Add(debuff);
+    }
+
+
     public void Heal(int amount)
     {
         currentHealth += amount;
@@ -71,6 +77,8 @@ public class PlayerManager : MonoBehaviour
     public void StartPlayerTurn()
     {
         currentShield = 0;
+        
+        _debuffs.Clear();
 
         UpdateUI();
     }
@@ -81,4 +89,28 @@ public class PlayerManager : MonoBehaviour
         healthSlider.value = currentHealth;
     }
 
+    public void DoAttack(GameObject follower)
+    {
+        GodManager.instance.UseFollower();
+        CardStats cardStats = follower.GetComponent<CardHandler>().GetCardStats();
+        var gameManager = GameManager.Instance;
+
+        if(_debuffs.Any(x => x.Type == DebuffType.Weak))
+            gameManager.EnemyHandler.TakeDamage(cardStats.damage/2);
+        else
+            gameManager.EnemyHandler.TakeDamage(cardStats.damage);
+
+        if (_debuffs.Any(x => x.Type == DebuffType.Ailment))
+            gameManager.PlayerManager.Heal(cardStats.healing/2);
+        else
+            gameManager.PlayerManager.Heal(cardStats.healing);
+
+
+        gameManager.PlayerManager.AddShield(cardStats.shield);
+        for (int i = 0; i < cardStats.draw; i++)
+        {
+            DeckHandler.Instance.PutCardInHand();
+        }
+
+    }
 }
