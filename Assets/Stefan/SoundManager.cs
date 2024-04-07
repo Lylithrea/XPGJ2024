@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
+
 [Serializable]
 public struct SoundData
 {
@@ -139,6 +141,7 @@ public class SoundManager : MonoBehaviour
         source2.clip = SoundClips[SoundName.Menu];
         source2.loop = true;
         source2.volume = volume * _masterVolume;
+        source2.Play();
         //source2.PlayDelayed(source2.clip.length);
     }
 

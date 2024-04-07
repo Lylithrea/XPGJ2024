@@ -160,9 +160,9 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         MapHandler.Instance.SetMapActive(true);
-        SoundManager.Instance.PlayMenuMusic();
         SoundManager.Instance.StopRestMusic();
         SoundManager.Instance.StopBattleMusic();
+        SoundManager.Instance.PlayMenuMusic();
         DisableAllObjectsOfInterest();
     }
 

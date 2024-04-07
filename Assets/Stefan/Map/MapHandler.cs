@@ -2,7 +2,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -257,7 +256,9 @@ public class MapHandler : MonoBehaviour
         foreach (var n in _checkedNodes)
         {
             bossNode.PreviousNodes.Add(n);
+            n.nextNodes.Add(bossNode);
         }
+        
         _checkedNodes.Add(bossNode);
         bossNode.catagory = NodeCatagory.Boss;
         bossNode.enemy = bossEnemies[Random.Range(0, bossEnemies.Count)];
