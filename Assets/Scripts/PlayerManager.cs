@@ -50,6 +50,8 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Player died");
         }
         UpdateUI();
+
+        JuiceManager.Instance.ScreenShake();
     }
 
     public void AddDebuff(Debuff debuff)

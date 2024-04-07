@@ -1,8 +1,5 @@
-using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -82,10 +79,6 @@ public class MapHandler : MonoBehaviour
 
     }
 
-
-    
-
-
     void GenerateNodes()
     {
 
@@ -119,6 +112,14 @@ public class MapHandler : MonoBehaviour
                 }
                 else if (rand < (cumulativeChance += _divergeNodeChance))
                 {
+                    //calculate next node count to be lower than map width
+                    //int sum = 2;
+                    //foreach (var item in _checkedNodes)
+                    //{
+                    //    sum++;
+                    //    if (item.Type == NodeType.Diverge) sum++;
+                    //}
+
                     if (_checkedNodes.Count <= _mapWidth - 1)
                         CreateDivergeNode(node, j);
                     else
@@ -127,21 +128,8 @@ public class MapHandler : MonoBehaviour
 
             }
 
-            ////position nodes
-            Vector3 firstNodePos = _checkedNodes[0].transform.localPosition;
-            Vector3 secondNodePos = _checkedNodes[_checkedNodes.Count - 1].transform.localPosition;
-            Vector3 dir = (secondNodePos - firstNodePos);
-            Vector3 normal = new Vector3 (-dir.y, dir.x).normalized;
-            Vector3 centerOfPreviousNodes = Vector2.Lerp(firstNodePos, secondNodePos, .5f);
+            CenterNodes();
 
-            Vector3 positionInFront = centerOfPreviousNodes + _spacing  * normal;
-            Vector3 centerOfNewNodes = Vector2.Lerp(_newNodes[0].transform.localPosition, _newNodes[_newNodes.Count - 1].transform.localPosition, .5f);
-            Vector3 offset = positionInFront - centerOfNewNodes;
-
-            foreach (var item in _newNodes)
-            {
-                item.transform.localPosition += offset;
-            }
             ConnectConvergeNodes();
 
             var copy = _checkedNodes;
@@ -151,6 +139,25 @@ public class MapHandler : MonoBehaviour
         }
 
         CreateBoss();
+    }
+
+    void CenterNodes()
+    {
+        ////position nodes
+        Vector3 firstNodePos = _checkedNodes[0].transform.localPosition;
+        Vector3 secondNodePos = _checkedNodes[_checkedNodes.Count - 1].transform.localPosition;
+        Vector3 dir = (secondNodePos - firstNodePos);
+        Vector3 normal = new Vector3(-dir.y, dir.x).normalized;
+        Vector3 centerOfPreviousNodes = Vector2.Lerp(firstNodePos, secondNodePos, .5f);
+
+        Vector3 positionInFront = centerOfPreviousNodes + _spacing * normal;
+        Vector3 centerOfNewNodes = Vector2.Lerp(_newNodes[0].transform.localPosition, _newNodes[_newNodes.Count - 1].transform.localPosition, .5f);
+        Vector3 offset = positionInFront - centerOfNewNodes;
+
+        foreach (var item in _newNodes)
+        {
+            item.transform.localPosition += offset;
+        }
     }
 
     void PrepareConvergeNode(Node parentNode)

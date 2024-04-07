@@ -325,7 +325,7 @@ MonoBehaviour:
   _nodePrefab: {fileID: 19698134488736319, guid: 98b05518b52772641a4fce2c11c1fd62, type: 3}
   _convergeNodeChance: 0.25
   _stayNodeChance: 0.4
-  _divergeNodeChance: 0.4
+  _divergeNodeChance: 1
   _lineThickness: 5
   _mapLength: 8
   _mapWidth: 5
@@ -993,6 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7377def067c17174b8ac5548d91dbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DiscardedCards: []
 --- !u!1 &537650266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,7 +1196,7 @@ MonoBehaviour:
   _hand: {fileID: 750109718}
   _waitUntilNext: 0.2
   test: 0
-  _discardSpot: {fileID: 521998795}
+  _discardPile: {fileID: 0}
   _discardTween:
     Duration: 0.2
     Easing: 1
@@ -1203,7 +1204,7 @@ MonoBehaviour:
     Duration: 0.2
     Easing: 1
   _handDrawPrefab: {fileID: 5359415531105183421, guid: 15831414d87b8cc478d2ab66e342eab7, type: 3}
-  back: {fileID: 0}
+  Deck: []
 --- !u!1 &682683375
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,12 +3262,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPrefab: {fileID: 1134506642533977894, guid: ee09d3aa7cc736443bd603ec8ef6dcc8, type: 3}
+  _hand: {fileID: 750109718}
   _cards:
   - {fileID: 11400000, guid: b0ab1d483b6420a49860133a60bb70c1, type: 2}
   - {fileID: 11400000, guid: bec25142abbee93498014b5176c27201, type: 2}
   - {fileID: 11400000, guid: d2cf6fe0f4597f942b2555cf1b67d298, type: 2}
   - {fileID: 11400000, guid: 7f092cd60c83b6a4a9c1ef36587bd019, type: 2}
-  _hand: {fileID: 750109718}
 --- !u!224 &1874953939 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4885288406261186145, guid: 98b05518b52772641a4fce2c11c1fd62, type: 3}

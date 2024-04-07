@@ -34,6 +34,24 @@ public class JuiceManager : MonoBehaviour
 
     public int FollowerSize = 10;
 
+    public static JuiceManager Instance;
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        else
+            Instance = this;
+
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
+    }
+
     private void Start()
     {
         originalCanvasPosition = Ui_ToScreenShake.transform.localPosition;

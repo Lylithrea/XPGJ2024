@@ -8,11 +8,13 @@ public struct SoundData
 {
     public float Volume;
     public string Name;
+    public bool Loop;
 
-    public SoundData(float volume, string name = null)
+    public SoundData(float volume, bool loop = false, string name = null)
     {
         Volume = volume;
         Name = name;
+        Loop = loop;
     }
 }
 public enum SoundName
@@ -32,7 +34,7 @@ public enum SoundName
     CardDraw,
     ButtonClick
 }
-
+[Serializable]
 class SourceInfo
 {
     public AudioSource AudioSource;
@@ -47,7 +49,7 @@ class SourceInfo
 
 public class SoundManager : MonoBehaviour
 {
-    readonly List<SourceInfo> _activeSources = new();
+    [SerializeField] List<SourceInfo> _activeSources = new();
     Stack<AudioSource> _inactiveSources;
     public static SoundManager Instance { get; private set; }
     void Awake()
@@ -65,7 +67,7 @@ public class SoundManager : MonoBehaviour
                 InitSource(source);
             Instance = this;
 
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -92,11 +94,11 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"There is no sound named {soundName}");
             return;
         }
-
-        var source = data.Name != null ? GetSource(data.Name) : GetSource();
+        var source = GetSource(data.Name);
 
         source.clip = SoundClips[soundName];
         source.volume = data.Volume * _masterVolume;
+        source.loop = data.Loop;
         source.Play();
     }
 
