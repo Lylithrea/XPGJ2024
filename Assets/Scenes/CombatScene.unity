@@ -377,12 +377,16 @@ MonoBehaviour:
   possibleEnemies:
   - {fileID: 11400000, guid: c4e6ea24e1a635a419cef2c72e93e430, type: 2}
   - {fileID: 11400000, guid: 089c4735c585df644998761b9e386b42, type: 2}
+  bossEnemies: []
   map: {fileID: 1367791554}
   nodeParent: {fileID: 750403136}
   lineParent: {fileID: 1293458747}
   enemyIcon: {fileID: 764586905, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
+  bossIcon: {fileID: 0}
   chestIcon: {fileID: -260955836, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
   campfireIcon: {fileID: -1146933986, guid: e69b99a38fcb06a42a7e3778c133bbba, type: 3}
+  mapAnimationDuration: 1
+  roadColor: {r: 0.2264151, g: 0.17243591, b: 0.12459949, a: 1}
 --- !u!1 &174443806
 GameObject:
   m_ObjectHideFlags: 0
@@ -4531,11 +4535,11 @@ RectTransform:
   - {fileID: 750403136}
   m_Father: {fileID: 135072907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -32.3954, y: -1.6198}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -32.3954, y: -508.60638}
   m_SizeDelta: {x: 1778.0774, y: 1113.9731}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1370746790
 GameObject:
   m_ObjectHideFlags: 0
@@ -5381,6 +5385,11 @@ MonoBehaviour:
   ChestHandler: {fileID: 808889469}
   CampfireHandler: {fileID: 1077052561}
   continueButton: {fileID: 1231993616}
+  turnDrawCards: 4
+  EndScreen: {fileID: 0}
+  victoryElements: []
+  defeatElements: []
+  isBoss: 0
 --- !u!1 &1817119921
 GameObject:
   m_ObjectHideFlags: 0
