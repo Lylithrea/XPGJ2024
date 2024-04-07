@@ -41,6 +41,7 @@ public class Hand : MonoBehaviour
     public void AddCard(GameObject card)
     {
         cards.Add(card);
+        //SoundManager.Instance.PlaySound(SoundName.CardDraw);
     }
 
     public void RemoveCard(GameObject card)

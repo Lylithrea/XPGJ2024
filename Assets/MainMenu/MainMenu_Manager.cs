@@ -10,10 +10,18 @@ public class MainMenu_Manager : MonoBehaviour
     public GameObject OptionMenu;
     public Scene GameScene;
 
+    private void Start()
+    {
+        SoundManager.Instance.PlaySound(SoundName.Menu, new SoundData(1,"Menu"));
+    }
+
     public void StartGame()
     {
         
         SceneManager.LoadScene("CombatScene");
+
+        SoundManager.Instance.PlayBattleMusic();
+        SoundManager.Instance.StopSound("Menu");
     }
 
     public void OpenOptions()

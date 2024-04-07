@@ -68,6 +68,7 @@ public class GodHandler : MonoBehaviour, ICardInteractable
     {
         Debug.Log("Sacrificed the follower...");
         GodManager.instance.SacrificeHandler(god.god, card);
+        SoundManager.Instance.PlaySound(SoundName.CardSacrifice);
     }
 
 }

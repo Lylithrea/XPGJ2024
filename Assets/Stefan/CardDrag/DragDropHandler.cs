@@ -38,6 +38,7 @@ public class DragDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         if (!canUseCard) return;
         _origScale = transform.localScale;
+        SoundManager.Instance.PlaySound(SoundName.CardHover);
 
         //_origRotationZ = transform.eulerAngles.z;
         transform.DOScale(transform.localScale.x + _scaleAdd, _scale.Duration).SetEase(_scale.Easing);

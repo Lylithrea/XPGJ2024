@@ -71,8 +71,6 @@ public class DeckHandler : MonoBehaviour
         Transform openSpot = _hand.GetOpenSpot();
         if (openSpot == null) return false;
 
-        GameObject card ;
-
 
         if (_drawPile.Cards.Count <= 0)
         {
@@ -88,7 +86,7 @@ public class DeckHandler : MonoBehaviour
                 return false;
             }
         }
-        card = _drawPile.GetCard();
+        GameObject card = _drawPile.GetCard();
 
         Debug.Log("CARD: " + card);
         card.GetComponentInChildren<CardFlipper>().FlipToFront();
@@ -99,6 +97,8 @@ public class DeckHandler : MonoBehaviour
         card.transform.DORotate(openSpot.eulerAngles, _goToSpot.Duration).SetEase(_goToSpot.Easing);
         _hand.AddCard(card);
         _drawPile.gameObject.GetComponent<PileSize>().AdjustSize(_drawPile.Cards.Count);
+
+        SoundManager.Instance.PlaySound(SoundName.CardDraw);
         DragDropHandler handDraw = card.AddComponent<DragDropHandler>();
 
         handDraw.SetRestPosition(openSpot);
@@ -131,6 +131,8 @@ public class DeckHandler : MonoBehaviour
         card.transform.DORotate(new Vector3(90, rot.y, rot.z), _discardTween.Duration).SetEase(_discardTween.Easing);
         card.GetComponent<Image>().DOFade(0, _discardTween.Duration / 2).SetEase(_discardTween.Easing).SetDelay( _discardTween.Duration / 2);
         _hand.RemoveCard(card);
+        SoundManager.Instance.PlaySound(SoundName.CardUse);
+
         //add in discard
         _discardPile.DiscardedCards.Add(card.GetComponent<CardHandler>().followerCard);
         _discardPile.gameObject.GetComponent<PileSize>().AdjustSize(_discardPile.DiscardedCards.Count);
@@ -149,6 +151,7 @@ public class DeckHandler : MonoBehaviour
     public void SacrificeCard(GameObject card)
     {
         _hand.RemoveCard(card);
+        
     }
 
 

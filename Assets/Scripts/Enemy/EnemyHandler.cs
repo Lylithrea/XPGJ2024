@@ -100,6 +100,7 @@ public class EnemyHandler : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        SoundManager.Instance.PlaySound(SoundName.EnemyHit);
         // Subtract from shield first
         if (currentShield > 0)
         {
