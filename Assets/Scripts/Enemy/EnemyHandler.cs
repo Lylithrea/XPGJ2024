@@ -121,11 +121,23 @@ public class EnemyHandler : MonoBehaviour
 
         // Subtract from health
         currentHealth -= amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
 
         if (currentHealth <= 0)
         {
             Debug.Log("Enemy Died");
-            GameManager.Instance.EndGame();
+            if (GameManager.Instance.isBoss)
+            {
+                GameManager.Instance.ShowEndScreen(true);
+            }
+            else
+            {
+                GameManager.Instance.EndGame();
+            }
+
         }
         UpdateUI();
     }

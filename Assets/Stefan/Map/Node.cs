@@ -12,7 +12,8 @@ public enum NodeCatagory
 {
     Enemy,
     Chest,
-    Campfire
+    Campfire,
+    Boss
 }
 
 public class Node : MonoBehaviour

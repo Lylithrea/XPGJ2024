@@ -22,7 +22,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject continueButton;
 
+    public int turnDrawCards = 4;
 
+    public GameObject EndScreen;
+    public List<GameObject> victoryElements = new List<GameObject>();
+    public List<GameObject> defeatElements = new List<GameObject>();
+
+    public bool isBoss = false;
 
     public void Awake()
     {
@@ -32,6 +38,35 @@ public class GameManager : MonoBehaviour
         }
         DisableAllObjectsOfInterest();
     }
+
+
+    public void ShowEndScreen(bool victory)
+    {
+        EndScreen.SetActive(true);
+        if (victory)
+        {
+            foreach (GameObject element in defeatElements)
+            {
+                element.SetActive(false);
+            }
+            foreach (GameObject element in victoryElements)
+            {
+                element.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject element in victoryElements)
+            {
+                element.SetActive(false);
+            }
+            foreach (GameObject element in defeatElements)
+            {
+                element.SetActive(true);
+            }
+        }
+    }
+
 
     public void EndTurn()
     {
@@ -51,6 +86,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerManager.StartPlayerTurn();
         DeckHandler.Instance.FillHand();
+        for (int i = 0; i < turnDrawCards; i++)
+        {
+            DeckHandler.Instance.PutCardInHand();
+        }
         DeckHandler.Instance.UpdateHandActivity(true);
     }
 
@@ -107,7 +146,7 @@ public class GameManager : MonoBehaviour
     {
         //handle drawing cards
         //Animations etc?
-        DeckHandler.Instance.FillHand();
+        FillHand();
         SoundManager.Instance.PlayBattleMusic();
     }
 

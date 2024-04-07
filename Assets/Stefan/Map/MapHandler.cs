@@ -31,6 +31,7 @@ public class MapHandler : MonoBehaviour
     public List<Node> allNodes = new List<Node> ();
 
     public List<SO_Enemy> possibleEnemies = new List<SO_Enemy>();
+    public List<SO_Enemy> bossEnemies = new List<SO_Enemy>();
 
     public static MapHandler Instance;
     public GameObject map;
@@ -39,9 +40,13 @@ public class MapHandler : MonoBehaviour
 
 
     public Sprite enemyIcon;
+    public Sprite bossIcon;
     public Sprite chestIcon;
     public Sprite campfireIcon;
 
+    public float mapAnimationDuration = 1f;
+
+    public Color roadColor;
 
     public void Awake()
     {
@@ -65,9 +70,46 @@ public class MapHandler : MonoBehaviour
 
     public void SetMapActive(bool isActive)
     {
-        map.SetActive(isActive);
+        //map.SetActive(isActive);
+        if (isActive)
+        {
+            StartCoroutine(OpenMap());
+        }
+        else
+        {
+            StartCoroutine(CloseMap());
+        }
     }
 
+    IEnumerator CloseMap()
+    {
+        float duration = 0;
+        while (duration < mapAnimationDuration)
+        {
+            float t = duration / mapAnimationDuration;
+
+            map.transform.eulerAngles = new Vector3(90 * t, map.transform.eulerAngles.y, map.transform.eulerAngles.z);
+
+            yield return null;
+            duration += Time.deltaTime;
+        }
+        map.transform.eulerAngles = new Vector3(90, map.transform.eulerAngles.y, map.transform.eulerAngles.z);
+    }
+
+    IEnumerator OpenMap()
+    {
+        float duration = 0;
+        while (duration < mapAnimationDuration)
+        {
+            float t = duration / mapAnimationDuration;
+
+            map.transform.eulerAngles = new Vector3(90 * (1 - t), map.transform.eulerAngles.y, map.transform.eulerAngles.z);
+
+            yield return null;
+            duration += Time.deltaTime;
+        }
+        map.transform.eulerAngles = new Vector3(0, map.transform.eulerAngles.y, map.transform.eulerAngles.z);
+    }
 
     void Start()
     {
@@ -217,6 +259,10 @@ public class MapHandler : MonoBehaviour
             bossNode.PreviousNodes.Add(n);
         }
         _checkedNodes.Add(bossNode);
+        bossNode.catagory = NodeCatagory.Boss;
+        bossNode.enemy = bossEnemies[Random.Range(0, bossEnemies.Count)];
+        bossNode.transform.localRotation = Quaternion.Euler(0, 0, nodeParent.localRotation.eulerAngles.z * -1);
+        bossNode.Setup();
     }
 
 
@@ -225,7 +271,9 @@ public class MapHandler : MonoBehaviour
         switch (catagory)
         {
             case NodeCatagory.Enemy:
-                return enemyIcon;
+                return enemyIcon;            
+            case NodeCatagory.Boss:
+                return bossIcon;
             case NodeCatagory.Chest:
                 return chestIcon;
             case NodeCatagory.Campfire:
@@ -287,7 +335,7 @@ public class MapHandler : MonoBehaviour
     public void MakeLine(Vector2 start, Vector2 end)
     {
         var go = new GameObject("Line").AddComponent<Image>();
-        go.color = Color.red;
+        go.color = roadColor;
         go.transform.SetParent(lineParent);
         var rectTransf = go.GetComponent<RectTransform>();
 

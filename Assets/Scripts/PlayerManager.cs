@@ -44,11 +44,16 @@ public class PlayerManager : MonoBehaviour
 
         // Subtract from health
         currentHealth -= amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
 
         // Check if player died
         if (currentHealth <= 0)
         {
             Debug.Log("Player died");
+            GameManager.Instance.ShowEndScreen(false);
         }
         UpdateUI();
     }
