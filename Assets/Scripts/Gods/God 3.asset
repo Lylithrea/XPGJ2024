@@ -17,7 +17,7 @@ MonoBehaviour:
   godColor: {r: 0.109024554, g: 0.6603774, b: 0.27120307, a: 1}
   godDescription: Fertility
   godLevel: 0
-  godSprite: {fileID: 0}
+  godSprite: {fileID: -1562244473, guid: 49d7ed97669413d4e9264a3630c04108, type: 3}
   godLevelStats: feffffffffffffff000000000100000002000000
   maxFavour: 100
   currentFavour: 50
