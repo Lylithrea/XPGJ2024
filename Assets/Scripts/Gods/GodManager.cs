@@ -92,6 +92,8 @@ public class GodManager : MonoBehaviour
                 Debug.LogWarning("God does not exist.");
                 break;
         }
+
+        DeckHandler.Instance.Deck.Remove(follower.GetComponent<CardHandler>().followerCard);
     }
 
 

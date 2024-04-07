@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
     {
         ChestHandler.ClosePopup();
         //add card to deck
+        DeckHandler.Instance.Deck.Add(card);
         continueButton.SetActive(true);
     }
 
