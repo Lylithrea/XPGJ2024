@@ -87,6 +87,8 @@ public class JuiceManager : MonoBehaviour
         
     }
 
+
+
     public void UpdateFollowers(int FollowerAmount)
     {
         

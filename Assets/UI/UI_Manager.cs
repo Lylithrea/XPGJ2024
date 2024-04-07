@@ -48,7 +48,11 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void ExitGame()
+    {
 
+        Application.Quit();
+    }
     public void PlayRewardEnter()
     {
         RewardAnimator.Play("RewardEnter");
@@ -112,5 +116,14 @@ public class UI_Manager : MonoBehaviour
     {
         Debug.Log("Option3 Picked");
     }
+
+
+    public void MainMenuMusic()
+    {
+        SoundManager.Instance.StopRestMusic();
+        SoundManager.Instance.StopBattleMusic();
+        SoundManager.Instance.PlayMenuMusic();
+    }
+
 
 }

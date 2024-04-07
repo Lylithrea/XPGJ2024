@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Police
   enemySprite: {fileID: 21300000, guid: 71e6563c4cc88a642961138461de59d2, type: 3}
-  maxHealth: 150
+  maxHealth: 11
   enemyHealthPatterns:
   - healthPercentage: 0
     attackPattern:
     - attackList:
       - attackIndication: {fileID: 0}
-        damage: 10
+        damage: 1
         shield: 0
         heal: 0
       - attackIndication: {fileID: 0}
@@ -30,7 +30,7 @@ MonoBehaviour:
       - attackIndication: {fileID: 0}
         damage: 0
         shield: 0
-        heal: 10
+        heal: 1
     - attackList:
       - attackIndication: {fileID: 0}
         damage: 0
