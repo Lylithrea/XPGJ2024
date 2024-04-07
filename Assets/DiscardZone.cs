@@ -15,10 +15,13 @@ public class DiscardZone : MonoBehaviour, ICardInteractable
 
     public void Interact(GameObject card)
     {
+        card.transform.SetParent(card.transform.parent.parent);
         DeckHandler.Instance.DiscardCard(card);
-
-
         GameManager.Instance.PlayerManager.DoAttack(card);
+
+
+
+
         //flipper.FlipToBack();
     }
 

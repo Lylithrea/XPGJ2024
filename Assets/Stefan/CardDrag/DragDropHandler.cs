@@ -45,6 +45,7 @@ public class DragDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!canUseCard) return;
         RotateDependingOnDistance();
         transform.position = eventData.position;
     }

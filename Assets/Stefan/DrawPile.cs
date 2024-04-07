@@ -9,6 +9,8 @@ public class DrawPile : MonoBehaviour
     [SerializeField] Hand _hand;
     List<SO_Card> _cards = new List<SO_Card>();
 
+
+
     public ReadOnlyCollection<SO_Card> Cards { get; private set; }
 
     void Awake()
@@ -19,6 +21,7 @@ public class DrawPile : MonoBehaviour
     public void PutCardInPile( SO_Card card)
     {
         _cards.Add(card);
+        this.gameObject.GetComponent<PileSize>().AdjustSize(_cards.Count);
     }
 
     public GameObject GetCard()
@@ -32,6 +35,7 @@ public class DrawPile : MonoBehaviour
         cardObj.GetComponentInChildren<CardHandler>().SetupCard(card);
         cardObj.transform.position = transform.position;
         _cards.Remove(card);
+        //this.gameObject.GetComponent<PileSize>().AdjustSize(_cards.Count);
         return cardObj;
     }
 

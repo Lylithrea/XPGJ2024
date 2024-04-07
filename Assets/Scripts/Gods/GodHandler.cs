@@ -25,6 +25,8 @@ public class GodHandler : MonoBehaviour, ICardInteractable
 
         godFavour.maxValue = god.maxFavour;
         godFavour.value = god.currentFavour;
+
+        godImage.sprite = god.godSprite;    
     }
 
 

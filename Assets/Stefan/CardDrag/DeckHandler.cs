@@ -72,22 +72,26 @@ public class DeckHandler : MonoBehaviour
         Transform openSpot = _hand.GetOpenSpot();
         if (openSpot == null) return false;
 
-        GameObject card = _drawPile.GetCard();
+        GameObject card ;
 
-        if(card == null)
+
+        if (_drawPile.Cards.Count <= 0)
         {
             foreach (var discardCard in _discardPile.DiscardedCards)
                 _drawPile.PutCardInPile (discardCard);
-            card = _drawPile.GetCard ();
 
-            if (card == null)
+            _discardPile.DiscardedCards.Clear();
+            _discardPile.gameObject.GetComponent<PileSize>().AdjustSize(_discardPile.DiscardedCards.Count);
+            if (_drawPile.Cards.Count <= 0)
             {
                 //YOU LOST! THERE ARE NO MORE CARDS TO USE!
                 
                 return false;
             }
         }
-        
+        card = _drawPile.GetCard();
+
+        Debug.Log("CARD: " + card);
         card.GetComponentInChildren<CardFlipper>().FlipToFront();
 
 
@@ -95,7 +99,7 @@ public class DeckHandler : MonoBehaviour
         card.transform.DOMove(openSpot.position, _goToSpot.Duration).SetEase(_goToSpot.Easing);
         card.transform.DORotate(openSpot.eulerAngles, _goToSpot.Duration).SetEase(_goToSpot.Easing);
         _hand.AddCard(card);
-
+        _drawPile.gameObject.GetComponent<PileSize>().AdjustSize(_drawPile.Cards.Count);
         DragDropHandler handDraw = card.AddComponent<DragDropHandler>();
 
         handDraw.SetRestPosition(openSpot);
@@ -112,7 +116,7 @@ public class DeckHandler : MonoBehaviour
     {
         foreach (Transform child in _hand.gameObject.transform)
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
         _hand.ClearHand();
     }
@@ -130,6 +134,7 @@ public class DeckHandler : MonoBehaviour
         _hand.RemoveCard(card);
         //add in discard
         _discardPile.DiscardedCards.Add(card.GetComponent<CardHandler>().followerCard);
+        _discardPile.gameObject.GetComponent<PileSize>().AdjustSize(_discardPile.DiscardedCards.Count);
 
     }
 

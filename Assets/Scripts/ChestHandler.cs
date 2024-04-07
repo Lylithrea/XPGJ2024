@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ChestHandler : MonoBehaviour
 {
     public GameObject chest;
+    public Sprite openChest;
     public Sprite chestBackground;
 
     public int rewardCount = 3;
@@ -26,6 +27,8 @@ public class ChestHandler : MonoBehaviour
             a.GetComponentInChildren<CardHandler>().isRewardCard(true);
             a.GetComponentInChildren<CardFlipper>().FlipToFront();
         }
+
+        chest.GetComponent<Image>().sprite = openChest;
 
     }
 

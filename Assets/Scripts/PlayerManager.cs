@@ -107,6 +107,9 @@ public class PlayerManager : MonoBehaviour
 
 
         gameManager.PlayerManager.AddShield(cardStats.shield);
+
+
+        Debug.Log("Card stats: " + cardStats.draw);
         for (int i = 0; i < cardStats.draw; i++)
         {
             DeckHandler.Instance.PutCardInHand();

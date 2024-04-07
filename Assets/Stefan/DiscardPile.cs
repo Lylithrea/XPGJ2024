@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiscardPile : MonoBehaviour
 {
-    public List<SO_Card> DiscardedCards { get; } = new();
+    public List<SO_Card> DiscardedCards = new List<SO_Card>();
 
 
 }

@@ -48,7 +48,8 @@ public class EnemyHandler : MonoBehaviour
 
         currentEnemy = enemy;
 
-        GameManager.Instance.SetupObjectOfInterest(currentEnemy.enemySprite, currentEnemy.enemyName);
+        enemyImage.sprite = currentEnemy.enemySprite;
+        enemyName.text = currentEnemy.enemyName;
 
         UpdateUI();
     }

@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
     public ChestHandler ChestHandler;
     public CampfireHandler CampfireHandler;
 
-    public Image objectOfInterest;
-    public TextMeshProUGUI objectOfInterestText;
-
     public GameObject continueButton;
 
 
@@ -65,11 +62,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SetupObjectOfInterest(Sprite sprite, string text)
-    {
-        objectOfInterest.sprite = sprite;
-        objectOfInterestText.text = text;
-    }
 
     public void DisableAllObjectsOfInterest()
     {

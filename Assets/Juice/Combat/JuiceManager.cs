@@ -38,8 +38,7 @@ public class JuiceManager : MonoBehaviour
     {
         originalCanvasPosition = Ui_ToScreenShake.transform.localPosition;
         originalCanvasScale = Ui_ToScreenShake.transform.localScale;
-        UpdateDeckSize();
-        UpdateDiscardSize();
+
     }
 
     public void Update()
