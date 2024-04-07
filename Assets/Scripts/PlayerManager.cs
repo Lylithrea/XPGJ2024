@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        SoundManager.Instance.PlaySound(SoundName.CharHit);
         // Subtract from shield first
         if (currentShield > 0)
         {

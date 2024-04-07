@@ -1564,15 +1564,15 @@ MonoBehaviour:
     - Key: 4
       Value: {fileID: 8300000, guid: 8c97a1e101f1b354f9992633e78c9378, type: 3}
     - Key: 1
-      Value: {fileID: 0}
+      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 2
-      Value: {fileID: 0}
+      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 5
-      Value: {fileID: 0}
+      Value: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
     - Key: 6
-      Value: {fileID: 0}
+      Value: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
     - Key: 7
-      Value: {fileID: 0}
+      Value: {fileID: 8300000, guid: 339c71222f6cf5140a858d129fda4f3b, type: 3}
     - Key: 8
       Value: {fileID: 8300000, guid: a624cfc0e23287c4a90bc9888b552744, type: 3}
     - Key: 9

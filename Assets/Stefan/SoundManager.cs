@@ -22,13 +22,15 @@ public enum SoundName
     BattleLoop,
     Rest,
     Reward,
-    FollowerUse,
-    FollowerSacrifice,
+    CardUse,
+    CardSacrifice,
     EnemyHit,
     CharHit,
     CardHover,
     CardDraw,
-    ButtonClick
+    ButtonClick,
+    MapOpen,
+    MapHover
 }
 
 class SourceInfo
@@ -116,6 +118,16 @@ public class SoundManager : MonoBehaviour
             start.Stop();
         if(loop != null)
             loop.Stop();
+    }
+
+   
+
+    public void PlayButtonSound(float volume = 0.5f)
+    {
+        var source = GetSource("ButtonClick");
+        source.clip = SoundClips[SoundName.ButtonClick];
+        source.volume = volume;
+        source.Play();
     }
 
     void InitSource(AudioSource source)
