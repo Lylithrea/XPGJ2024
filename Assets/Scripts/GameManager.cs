@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,18 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    public Image background;
+
+
+    public ChestHandler ChestHandler;
+    public CampfireHandler CampfireHandler;
+
+    public Image objectOfInterest;
+    public TextMeshProUGUI objectOfInterestText;
+
+    public GameObject continueButton;
+
+
 
     public void Awake()
     {
@@ -19,11 +33,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-    }
-
-    public void Start()
-    {
-        SetupEnemy();
+        DisableAllObjectsOfInterest();
     }
 
     public void EndTurn()
@@ -48,9 +58,67 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void SetupEnemy()
+    public void SetEnemy(SO_Enemy enemy)
     {
-        EnemyHandler.Setup(enemies[Random.Range(0, enemies.Count)]);
+        EnemyHandler.SetActive(true);
+        EnemyHandler.Setup(enemy);
+
+    }
+
+    public void SetupObjectOfInterest(Sprite sprite, string text)
+    {
+        objectOfInterest.sprite = sprite;
+        objectOfInterestText.text = text;
+    }
+
+    public void DisableAllObjectsOfInterest()
+    {
+        EnemyHandler.SetActive(false);
+        CampfireHandler.SetActive(false);
+        ChestHandler.SetActive(false);
+        continueButton.SetActive(false);
+    }
+
+    public void OnClickContinue()
+    {
+        EndGame();
+    }
+
+
+    public void HandleCardReward(SO_Card card)
+    {
+        ChestHandler.ClosePopup();
+        //add card to deck
+        DeckHandler.Instance.Deck.Add(card);
+        continueButton.SetActive(true);
+    }
+
+    public void EnableContinueButton()
+    {
+        continueButton.SetActive(true);
+    }
+
+    public void SetupCampfire()
+    {
+        CampfireHandler.SetActive(true);
+    }
+
+    public void SetupChest()
+    {
+        ChestHandler.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        //handle drawing cards
+        //Animations etc?
+        DeckHandler.Instance.FillHand();
+    }
+
+    public void EndGame()
+    {
+        MapHandler.Instance.SetMapActive(true);
+        DisableAllObjectsOfInterest();
     }
 
 }

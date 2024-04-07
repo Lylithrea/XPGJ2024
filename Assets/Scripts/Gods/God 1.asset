@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d378c0674dc4743806b73b77d3763f, type: 3}
   m_Name: God 1
   m_EditorClassIdentifier: 
-  godName: God 1
+  godName: Ravagor
   god: 0
   godColor: {r: 0.8113208, g: 0.13394445, b: 0.13394445, a: 1}
   godDescription: Offensive
   godLevel: 0
-  godSprite: {fileID: 0}
+  godSprite: {fileID: 1234614482, guid: 49d7ed97669413d4e9264a3630c04108, type: 3}
   godLevelStats: feffffffffffffff000000000100000002000000
   maxFavour: 100
   currentFavour: 50

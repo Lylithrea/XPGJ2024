@@ -8,11 +8,12 @@ public class MainMenu_Manager : MonoBehaviour
 {
     
     public GameObject OptionMenu;
+    public Scene GameScene;
 
     public void StartGame()
     {
         
-        SceneManager.LoadScene("Thomas_Scene");
+        SceneManager.LoadScene("CombatScene");
     }
 
     public void OpenOptions()

@@ -14,10 +14,12 @@ public class JuiceManager : MonoBehaviour
     public GameObject DeckSize_1;
     public GameObject DeckSize_2;
     public GameObject DeckSize_3;
+    public GameObject DeckSize_4;
 
     public GameObject DiscardSize_1;
     public GameObject DiscardSize_2;
     public GameObject DiscardSize_3;
+    public GameObject DiscardSize_4;
 
     public GameObject Ui_ToScreenShake;
 
@@ -36,13 +38,15 @@ public class JuiceManager : MonoBehaviour
     {
         originalCanvasPosition = Ui_ToScreenShake.transform.localPosition;
         originalCanvasScale = Ui_ToScreenShake.transform.localScale;
+        UpdateDeckSize();
+        UpdateDiscardSize();
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.J)) 
         {
-            Debug.Log("whaaaaaa");
+            Debug.Log("whiiiiii");
             ScreenShake();
         }
 
@@ -64,7 +68,20 @@ public class JuiceManager : MonoBehaviour
             UpdateDiscardSize();
         }
 
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            DeckSize = DeckSize - 5;
+            UpdateDeckSize();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            DiscardSize = DiscardSize - 5;
+            UpdateDiscardSize();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.B))
         {
             UpdateFollowers(FollowerSize);
         }
@@ -84,20 +101,31 @@ public class JuiceManager : MonoBehaviour
             DeckSize_1.SetActive(true);
             DeckSize_2.SetActive(false);
             DeckSize_3.SetActive(false);
+            DeckSize_4.SetActive(false);
         }
         if (DeckSize >= 20)
         {
             Debug.Log("20 or more");
-            DeckSize_1.SetActive(false);
+            DeckSize_1.SetActive(true);
             DeckSize_2.SetActive(true);
             DeckSize_3.SetActive(false);
+            DeckSize_4.SetActive(false);
         }
         if (DeckSize >= 30)
         {
             Debug.Log("30 or more");
-            DeckSize_1.SetActive(false);
-            DeckSize_2.SetActive(false);
+            DeckSize_1.SetActive(true);
+            DeckSize_2.SetActive(true);
             DeckSize_3.SetActive(true);
+            DeckSize_4.SetActive(false);
+        }
+        if (DeckSize >= 40)
+        {
+            Debug.Log("40 or more");
+            DeckSize_1.SetActive(true);
+            DeckSize_2.SetActive(true);
+            DeckSize_3.SetActive(true);
+            DeckSize_4.SetActive(true);
         }
     }
 
@@ -109,20 +137,31 @@ public class JuiceManager : MonoBehaviour
             DiscardSize_1.SetActive(true);
             DiscardSize_2.SetActive(false);
             DiscardSize_3.SetActive(false);
+            DiscardSize_4.SetActive(false);
         }
         if (DiscardSize >= 20)
         {
             Debug.Log("20 or more");
-            DiscardSize_1.SetActive(false);
+            DiscardSize_1.SetActive(true);
             DiscardSize_2.SetActive(true);
             DiscardSize_3.SetActive(false);
+            DiscardSize_4.SetActive(false);
         }
         if (DiscardSize >= 30)
         {
             Debug.Log("30 or more");
-            DiscardSize_1.SetActive(false);
-            DiscardSize_2.SetActive(false);
+            DiscardSize_1.SetActive(true);
+            DiscardSize_2.SetActive(true);
             DiscardSize_3.SetActive(true);
+            DiscardSize_4.SetActive(false);
+        }
+        if (DiscardSize >= 40)
+        {
+            Debug.Log("40 or more");
+            DiscardSize_1.SetActive(true);
+            DiscardSize_2.SetActive(true);
+            DiscardSize_3.SetActive(true);
+            DiscardSize_4.SetActive(true);
         }
     }
 

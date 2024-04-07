@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d378c0674dc4743806b73b77d3763f, type: 3}
   m_Name: God 4
   m_EditorClassIdentifier: 
-  godName: God 4
+  godName: Alluris
   god: 3
   godColor: {r: 0.8962264, g: 0.4185208, b: 0.8740075, a: 1}
   godDescription: Socializing

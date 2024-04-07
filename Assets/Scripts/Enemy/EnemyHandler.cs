@@ -26,6 +26,8 @@ public struct Debuff
 public class EnemyHandler : MonoBehaviour
 {
 
+    public Sprite enemyBackground;
+
     public int maxHealth;
     public int currentHealth;
 
@@ -46,12 +48,17 @@ public class EnemyHandler : MonoBehaviour
 
         currentEnemy = enemy;
 
-        enemyImage.sprite = currentEnemy.enemySprite;
-        enemyName.text = currentEnemy.enemyName;
+        GameManager.Instance.SetupObjectOfInterest(currentEnemy.enemySprite, currentEnemy.enemyName);
 
         UpdateUI();
     }
 
+    public void SetActive(bool isActive)
+    {
+        enemyImage.enabled = isActive;
+        enemyName.enabled = isActive;
+        healthSlider.gameObject.SetActive(isActive);
+    }
 
     public void AddDebuff(Debuff debuff)
     {
@@ -116,7 +123,7 @@ public class EnemyHandler : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Enemy Died");
-            GameManager.Instance.SetupEnemy();
+            GameManager.Instance.EndGame();
         }
         UpdateUI();
     }
