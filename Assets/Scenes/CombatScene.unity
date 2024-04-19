@@ -363,8 +363,8 @@ MonoBehaviour:
   _divergeNodeChance: 0.4
   _lineThickness: 5
   _mapLength: 8
-  _mapWidth: 5
-  _spacing: 175
+  _mapWidth: 4
+  _spacing: 140
   offset: 50
   chestChance: 0.05
   campfireChance: 0.1
@@ -3865,18 +3865,18 @@ RectTransform:
   m_Children:
   - {fileID: 1649265490}
   - {fileID: 1163183891}
+  - {fileID: 1077052560}
+  - {fileID: 808889468}
+  - {fileID: 353847383}
+  - {fileID: 2050870825}
   - {fileID: 1165688864}
   - {fileID: 1054819935}
   - {fileID: 1231993617}
   - {fileID: 1017342760}
   - {fileID: 750109721}
-  - {fileID: 353847383}
-  - {fileID: 2050870825}
   - {fileID: 1579467945}
   - {fileID: 1218895992}
   - {fileID: 135072907}
-  - {fileID: 808889468}
-  - {fileID: 1077052560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -168,21 +168,8 @@ public class MapHandler : MonoBehaviour
 
             }
 
-            ////position nodes
-            Vector3 firstNodePos = _checkedNodes[0].transform.localPosition;
-            Vector3 secondNodePos = _checkedNodes[_checkedNodes.Count - 1].transform.localPosition;
-            Vector3 dir = (secondNodePos - firstNodePos);
-            Vector3 normal = new Vector3 (-dir.y, dir.x).normalized;
-            Vector3 centerOfPreviousNodes = Vector2.Lerp(firstNodePos, secondNodePos, .5f);
+            CenterNodes();
 
-            Vector3 positionInFront = centerOfPreviousNodes + _spacing  * normal;
-            Vector3 centerOfNewNodes = Vector2.Lerp(_newNodes[0].transform.localPosition, _newNodes[_newNodes.Count - 1].transform.localPosition, .5f);
-            Vector3 offset = positionInFront - centerOfNewNodes;
-
-            foreach (var item in _newNodes)
-            {
-                item.transform.localPosition += offset;
-            }
             ConnectConvergeNodes();
 
             var copy = _checkedNodes;
@@ -192,6 +179,24 @@ public class MapHandler : MonoBehaviour
         }
 
         CreateBoss();
+    }
+
+    void CenterNodes()
+    {
+        Vector3 firstNodePos = _checkedNodes[0].transform.localPosition;
+        Vector3 secondNodePos = _checkedNodes[_checkedNodes.Count - 1].transform.localPosition;
+        Vector3 dir = (secondNodePos - firstNodePos);
+        Vector3 normal = new Vector3(-dir.y, dir.x).normalized;
+        Vector3 centerOfPreviousNodes = Vector2.Lerp(firstNodePos, secondNodePos, .5f);
+
+        Vector3 positionInFront = centerOfPreviousNodes + _spacing * normal;
+        Vector3 centerOfNewNodes = Vector2.Lerp(_newNodes[0].transform.localPosition, _newNodes[_newNodes.Count - 1].transform.localPosition, .5f);
+        Vector3 offset = positionInFront - centerOfNewNodes;
+
+        foreach (var item in _newNodes)
+        {
+            item.transform.localPosition += offset;
+        }
     }
 
     void PrepareConvergeNode(Node parentNode)

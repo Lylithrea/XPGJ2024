@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Scientoly-Guy
   enemySprite: {fileID: 21300000, guid: feaec72ab6787de42849a34d3a6a7da3, type: 3}
-  maxHealth: 666
+  maxHealth: 30
   enemyHealthPatterns:
   - healthPercentage: 0
     attackPattern:

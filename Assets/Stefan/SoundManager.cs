@@ -3,19 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 [Serializable]
 public struct SoundData
 {
     public float Volume;
-    public string Name;
-
-    public SoundData(float volume, string name = null)
-    {
-        Volume = volume;
-        Name = name;
-    }
+    public AudioClip Clip;
+    
 }
 public enum SoundName
 {
@@ -51,9 +45,10 @@ class SourceInfo
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] List<SourceInfo> _activeSources = new();
+    readonly List<SourceInfo> _activeSources = new();
     Stack<AudioSource> _inactiveSources;
     public static SoundManager Instance { get; private set; }
+
     void Awake()
     {
         //Debug.Log("song awake");
@@ -74,7 +69,12 @@ public class SoundManager : MonoBehaviour
     }
 
     [SerializeField, Range(0, 1)] float _masterVolume; 
-    [SerializedDictionary("Clip Name", "Clip")] public SerializedDictionary<SoundName, AudioClip> SoundClips;
+    [SerializedDictionary("Clip Name", "Clip")] public SerializedDictionary<SoundName, SoundData> SoundClips;
+
+    public bool ContainsSoundWithName(string name)
+    {
+        return _activeSources.Any(s => s.Name == name);
+    }
 
     public void PlaySound(SoundName soundName)
     {
@@ -84,12 +84,12 @@ public class SoundManager : MonoBehaviour
             return;
         }
         var source = GetSource();
-        source.clip = SoundClips[soundName];
+        source.clip = SoundClips[soundName].Clip;
         source.volume *= _masterVolume;
         source.Play();
     }
 
-    public void PlaySound(SoundName soundName, SoundData data)
+    public void PlaySound(SoundName soundName, float volumeMult = 1, string name = null, bool loop = false)
     {
         if (!SoundClips.ContainsKey(soundName))
         {
@@ -97,28 +97,33 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        var source = data.Name != null ? GetSource(data.Name) : GetSource();
-        source.clip = SoundClips[soundName];
-        source.volume = data.Volume * _masterVolume;
+        AudioSource source = GetSource(name);
+        SoundData data = SoundClips[soundName];
+        source.clip = data.Clip;
+        source.volume = data.Volume * volumeMult * _masterVolume;
+        source.loop = loop;
         source.Play();
     }
 
     public void StopSound(string name)
     {
-        var source = FindSourceByName(name);
+        SourceInfo source = FindSourceInfoByName(name);
         if(source != null)
-            source.Stop();
+        {
+            source.AudioSource.Stop();
+            ReleaseSource(source);
+        }
     }
 
     public void PlayBattleMusic(float volume = .3f)
     {
         var source = GetSource("BattleStart");
-        source.clip = SoundClips[SoundName.BattleStart];
+        source.clip = SoundClips[SoundName.BattleStart].Clip;
         source.volume = volume * _masterVolume;
         source.Play();
 
         var source2 = GetSource("BattleLoop");
-        source2.clip = SoundClips[SoundName.BattleLoop];
+        source2.clip = SoundClips[SoundName.BattleLoop].Clip;
         source2.loop = true;
         source2.volume = volume * _masterVolume;
         source2.PlayDelayed(source.clip.length);
@@ -126,63 +131,21 @@ public class SoundManager : MonoBehaviour
 
     public void StopBattleMusic()
     {
-        var start = FindSourceByName("BattleStart");
-        var loop = FindSourceByName("BattleLoop");
+        SourceInfo start = FindSourceInfoByName("BattleStart");
+        SourceInfo loop = FindSourceInfoByName("BattleLoop");
 
-        if(start != null) start.Stop();
-        if(loop != null) loop.Stop();
+        if(start != null)
+        {
+            start.AudioSource.Stop();
+            ReleaseSource(start);
+        }
+        if(loop != null)
+        {
+            loop.AudioSource.Stop();
+            ReleaseSource(loop);
+        }
     }
 
-    public void PlayMenuMusic(float volume = .3f)
-    {
-        
-
-        var source2 = GetSource("Menu");
-        source2.clip = SoundClips[SoundName.Menu];
-        source2.loop = true;
-        source2.volume = volume * _masterVolume;
-        source2.Play();
-        //source2.PlayDelayed(source2.clip.length);
-    }
-
-    public void StopMenuMusic()
-    {
-        
-        var loop = FindSourceByName("Menu");
-
-        
-        if (loop != null) loop.Stop();
-    }
-
-    public void PlayRestMusic(float volume = .3f)
-    {
-
-
-        var source2 = GetSource("Rest");
-        source2.clip = SoundClips[SoundName.Rest];
-        source2.loop = true;
-        source2.volume = volume * _masterVolume;
-        //source2.PlayDelayed(source2.clip.length);
-    }
-
-    public void StopRestMusic()
-    {
-
-        var loop = FindSourceByName("Rest");
-
-
-        if (loop != null) loop.Stop();
-    }
-
-
-
-    public void PlayButtonSound(float volume = 0.5f)
-    {
-        var source = GetSource("ButtonClick");
-        source.clip = SoundClips[SoundName.ButtonClick];
-        source.volume = volume;
-        source.Play();
-    }
 
     void InitSource(AudioSource source)
     {
@@ -229,12 +192,9 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    AudioSource FindSourceByName(string name)
+    SourceInfo FindSourceInfoByName(string name)
     {
-        var info = _activeSources.FirstOrDefault(s => s.Name == name);
-        if(info != null)
-            return info.AudioSource;
-        return null;
+        return _activeSources.FirstOrDefault(s => s.Name == name);
     }
 
     void ReleaseSource(SourceInfo audioSource)
@@ -244,12 +204,12 @@ public class SoundManager : MonoBehaviour
         _inactiveSources.Push(audioSource.AudioSource);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         for (int i = 0; i < _activeSources.Count; i++)
         {
             var source = _activeSources[i];
-            if (!source.AudioSource.isPlaying)
+            if (source.AudioSource.time >= source.AudioSource.clip.length || (source.AudioSource.time == 0 && !source.AudioSource.isPlaying))
             {
                 ReleaseSource(source);
                 i--;

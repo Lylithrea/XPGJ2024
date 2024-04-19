@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.7406039, b: 1, a: 1}
+  m_Color: {r: 0.27450982, g: 0.18039216, b: 0.10980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -495,8 +495,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4283130560
+  m_fontColor: {r: 0.75294125, g: 0.38431376, b: 0.29411766, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -797,38 +797,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9e7ad2885f1b740adff52e44b5d3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activeSources: []
   _masterVolume: 1
   SoundClips:
     _serializedList:
     - Key: 4
-      Value: {fileID: 8300000, guid: 8c97a1e101f1b354f9992633e78c9378, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 8c97a1e101f1b354f9992633e78c9378, type: 3}
     - Key: 1
-      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 2
-      Value: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 9561b96c3ecaa6640abec2c1b336afea, type: 3}
     - Key: 5
-      Value: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
     - Key: 6
-      Value: {fileID: 8300000, guid: cd4451243b9d3fd4c981e3850a45b564, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 0}
     - Key: 7
-      Value: {fileID: 8300000, guid: 339c71222f6cf5140a858d129fda4f3b, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 339c71222f6cf5140a858d129fda4f3b, type: 3}
     - Key: 8
-      Value: {fileID: 8300000, guid: a624cfc0e23287c4a90bc9888b552744, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: a624cfc0e23287c4a90bc9888b552744, type: 3}
     - Key: 9
-      Value: {fileID: 8300000, guid: 2ef51bfd39028ba4d9e302a8b83fc482, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 2ef51bfd39028ba4d9e302a8b83fc482, type: 3}
     - Key: 10
-      Value: {fileID: 8300000, guid: 27a53ac0cf5c04e4999c751c085f0535, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 27a53ac0cf5c04e4999c751c085f0535, type: 3}
     - Key: 3
-      Value: {fileID: 8300000, guid: cdb83d13934b92a4aa05ba66dcd5f8eb, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 9a84f9f145266464aa9b965b7c625c20, type: 3}
+    - Key: 15
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 42e7e3418e907714e8c7171b699f8318, type: 3}
     - Key: 0
-      Value: {fileID: 0}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: f7174895f65042c45952581984a350eb, type: 3}
     - Key: 11
-      Value: {fileID: 8300000, guid: 40d7c7f1e5b0963408f1a0f0c8df380a, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: 40d7c7f1e5b0963408f1a0f0c8df380a, type: 3}
     - Key: 12
-      Value: {fileID: 8300000, guid: ac50009e5d9b9df47832ca3e2f567441, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: ac50009e5d9b9df47832ca3e2f567441, type: 3}
     - Key: 13
-      Value: {fileID: 8300000, guid: f7174895f65042c45952581984a350eb, type: 3}
+      Value:
+        Volume: 1
+        Clip: {fileID: 8300000, guid: f7174895f65042c45952581984a350eb, type: 3}
 --- !u!4 &450616061
 Transform:
   m_ObjectHideFlags: 0
@@ -985,8 +1016,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284315880
+  m_fontColor: {r: 0.909804, g: 0.47058827, b: 0.3647059, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1338,8 +1369,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4283130560
+  m_fontColor: {r: 0.75294125, g: 0.38431376, b: 0.29411766, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1442,7 +1473,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -245}
+  m_AnchoredPosition: {x: 0, y: -245}
   m_SizeDelta: {x: -1455.433, y: -963.29004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832979595

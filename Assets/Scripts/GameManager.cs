@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log("Ending turn");
         DeckHandler.Instance.UpdateHandActivity(false);
         HandleEnemyTurn();
         Invoke(nameof(FillHand), 2f);
@@ -104,10 +103,17 @@ public class GameManager : MonoBehaviour
 
     public void DisableAllObjectsOfInterest()
     {
-        EnemyHandler.SetActive(false);
-        CampfireHandler.SetActive(false);
-        ChestHandler.SetActive(false);
-        continueButton.SetActive(false);
+        if(EnemyHandler != null)
+            EnemyHandler.SetActive(false);
+
+        if(CampfireHandler != null)
+            CampfireHandler.SetActive(false);
+
+        if(ChestHandler != null)
+            ChestHandler.SetActive(false);
+
+        if(continueButton != null)
+            continueButton.SetActive(false);
     }
 
     public void OnClickContinue()
@@ -133,16 +139,18 @@ public class GameManager : MonoBehaviour
     {
         CampfireHandler.SetActive(true);
         SoundManager.Instance.StopBattleMusic();
-        SoundManager.Instance.StopMenuMusic();
-        SoundManager.Instance.PlayRestMusic();
+        SoundManager.Instance.StopSound("Menu");
+        SoundManager.Instance.PlaySound(SoundName.Rest, name: "Rest");
+
     }
 
     public void SetupChest()
     {
         ChestHandler.SetActive(true);
-        SoundManager.Instance.StopMenuMusic();
-        SoundManager.Instance.StopRestMusic();
-        SoundManager.Instance.PlayRestMusic();
+        SoundManager.Instance.StopSound("Menu");
+        SoundManager.Instance.StopSound("Rest");
+        SoundManager.Instance.PlaySound(SoundName.Rest, name: "Rest");
+
     }
 
     public void StartGame()
@@ -151,8 +159,8 @@ public class GameManager : MonoBehaviour
         //Animations etc?
         FillHand();
 
-        SoundManager.Instance.StopMenuMusic();
-        SoundManager.Instance.StopRestMusic();
+        SoundManager.Instance.StopSound("Menu");
+        SoundManager.Instance.StopSound("Rest");
 
         SoundManager.Instance.PlayBattleMusic();
     }
@@ -160,9 +168,9 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         MapHandler.Instance.SetMapActive(true);
-        SoundManager.Instance.StopRestMusic();
+        SoundManager.Instance.StopSound("Rest");
         SoundManager.Instance.StopBattleMusic();
-        SoundManager.Instance.PlayMenuMusic();
+        SoundManager.Instance.PlaySound(SoundName.Menu, name: "Menu");
         DisableAllObjectsOfInterest();
     }
 

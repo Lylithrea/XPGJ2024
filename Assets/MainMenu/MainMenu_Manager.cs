@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainMenu_Manager : MonoBehaviour
 {
@@ -12,15 +9,13 @@ public class MainMenu_Manager : MonoBehaviour
 
     private void Start()
     {
-        SoundManager.Instance.PlaySound(SoundName.Menu, new SoundData(1,"Menu"));
+        SoundManager.Instance.PlaySound(SoundName.Menu, name: "Menu");
     }
 
     public void StartGame()
     {
         
         SceneManager.LoadScene("CombatScene");
-
-        
        
     }
 
